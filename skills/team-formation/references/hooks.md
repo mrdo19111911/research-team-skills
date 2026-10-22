@@ -33,6 +33,10 @@ last 20 tool calls with errors flagged, files edited (Edit/Write/MultiEdit/Noteb
 STUCK AT / DO NOT RETRY / NEXT STEP are written as `fill in: ...` for the bench agent. Missing or broken transcript → a
 skeleton note with the reason. Always exits 0: never blocks compaction. Mention it in the seat's CLAUDE.md (substitution.md).
 
+## log_event.py (PostToolUse, Stop, SubagentStop)
+Appends one line per read, write or stop to `.team/events.jsonl` (files inside the campaign only); never blocks.
+No. 6 adds start / stop / pass events from the command line. Replay: `view_match.py` (match-log.md).
+
 ## settings.json
 ```json
 {
@@ -44,6 +48,12 @@ skeleton note with the reason. Always exits 0: never blocks compaction. Mention 
       {"matcher": "Read|NotebookRead|Grep|Glob|Bash|PowerShell|Edit|Write|MultiEdit|NotebookEdit",
        "hooks": [{"type": "command", "command": "python scripts/guard_sealed.py"}]}
     ],
+    "PostToolUse": [
+      {"matcher": "Read|NotebookRead|Write|Edit|MultiEdit|NotebookEdit",
+       "hooks": [{"type": "command", "command": "python scripts/log_event.py"}]}
+    ],
+    "Stop": [{"hooks": [{"type": "command", "command": "python scripts/log_event.py"}]}],
+    "SubagentStop": [{"hooks": [{"type": "command", "command": "python scripts/log_event.py"}]}],
     "PreCompact": [
       {"matcher": "manual|auto",
        "hooks": [{"type": "command", "command": "python scripts/precompact_handoff.py"}]}

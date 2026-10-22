@@ -23,6 +23,8 @@ relevant fragments, tabu log, its requests) + the task in one paragraph with its
   whose verdict and bank writes the hooks check per seat, run a separate headless session with its own environment
   (e.g. `TEAM_SEAT=2 claude -p "<prompt>"` in the campaign directory, or No. 1 in its own worktree); if you use the
   Agent tool for them anyway, the sealed-verdict rule holds by prompt only: record that on the board.
+- Log the spell: `log_event.py start --seat <n> --agent <id>` before the spawn, `stop` when it returns, and a
+  `pass --from <a> --to <b> --what "..."` for each hand-over (match-log.md). The hooks cannot tell Agent-tool spawns apart.
 - One task per spawn. The agent returns a board fragment (templates.md); No. 6 appends it to the board at agent-level.
 - Spawn a seat only when there is a task and budget for it. Core seats: 6, 14, 10, 8, 4, 9, 2, 3, 1, 7.
   No. 7 (far field) gets every obstacle No. 6 assigns, from Phase −1 on. Wing 11: only after No. 6 writes "switched on"
@@ -74,4 +76,5 @@ relevant fragments, tabu log, its requests) + the task in one paragraph with its
    directory so it cannot read `.team/`. Run it to the same budget.
 2. Fill `.team/metrics.md` for both: verified results with final-check label · time and cost to first verified result ·
    wrong directions killed early and their cost · catch rate of planted false variants · total spend · independence achieved.
-3. Team does not beat baseline → shrink the team (switch seats off, shrink squads) for the next campaign.
+3. Run `view_match.py <campaign>`: the replay and workload table show which seats to double and which to switch off.
+4. Team does not beat baseline → shrink the team (switch seats off, shrink squads) for the next campaign.

@@ -125,6 +125,9 @@ The bank records which one. Only Lean-checked or exact computer algebra counts a
 - `scripts/guard_locked.py` (PreToolUse): blocks edits to locked paths.
 - `scripts/guard_sealed.py` (PreToolUse): blocks reading another judge's verdict before `.team/verdicts/<id>/SEALED` exists.
 - `scripts/precompact_handoff.py` (PreCompact): writes the handoff note before context compaction.
+- `scripts/log_event.py` (PostToolUse, Stop, SubagentStop; also a CLI for No. 6): appends to `.team/events.jsonl` who
+  ran when and who passed what to whom. `scripts/view_match.py` replays it as `.team/match.html`: active seats glow, a
+  ball flies for each pass, and a workload table shows which seat needs more agents next time (references/match-log.md).
 Each seat sets `TEAM_SEAT`. Minimal guard install in the attack's and midfield's `.claude/settings.json`:
 ```json
 {"hooks": {"PreToolUse": [{"matcher": "Edit|Write|MultiEdit|NotebookEdit",

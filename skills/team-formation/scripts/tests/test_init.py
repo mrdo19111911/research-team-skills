@@ -44,7 +44,7 @@ class InitTeam(unittest.TestCase):
         self.assertTrue(all(l.startswith("#") or not l.strip() or "/" in l for l in locked.splitlines()))
         hooks = json.loads((self.team / "hooks.settings.json").read_text(encoding="utf-8"))["hooks"]
         cmds = json.dumps(hooks)
-        for s in ("guard_locked.py", "guard_sealed.py", "precompact_handoff.py"):
+        for s in ("guard_locked.py", "guard_sealed.py", "precompact_handoff.py", "log_event.py"):
             self.assertIn(s, cmds)
         self.assertIn("PreToolUse", hooks)
         self.assertIn("PreCompact", hooks)

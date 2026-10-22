@@ -320,6 +320,9 @@ def hooks_json():
             {"matcher": "Edit|Write|MultiEdit|NotebookEdit", "hooks": [cmd("guard_locked.py")]},
             {"matcher": "Read|NotebookRead|Edit|Write|MultiEdit|NotebookEdit|Grep|Glob|Bash|PowerShell", "hooks": [cmd("guard_sealed.py")]},
         ],
+        "PostToolUse": [{"matcher": "Read|NotebookRead|Write|Edit|MultiEdit|NotebookEdit", "hooks": [cmd("log_event.py")]}],
+        "Stop": [{"hooks": [cmd("log_event.py")]}],
+        "SubagentStop": [{"hooks": [cmd("log_event.py")]}],
         "PreCompact": [{"hooks": [cmd("precompact_handoff.py")]}],
     }}
 
@@ -381,7 +384,7 @@ def main(argv=None):
         print("skipped ", p, "(exists)")
     if missing:
         print("warning: no role card parsed for seats", missing, file=sys.stderr)
-    for s in ("guard_locked.py", "guard_sealed.py", "precompact_handoff.py"):
+    for s in ("guard_locked.py", "guard_sealed.py", "precompact_handoff.py", "log_event.py"):
         if not (SCRIPTS / s).exists():
             print(f"warning: hook script {s} not found in {SCRIPTS.as_posix()} (referenced anyway)", file=sys.stderr)
     print(f"next: merge {(team / 'hooks.settings.json').as_posix()} into the campaign's .claude/settings.json;"
