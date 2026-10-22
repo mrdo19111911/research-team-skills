@@ -6,7 +6,7 @@ editing statement, tests, Lean env, labels; editing others' proofs · lean4-skil
 **No. 10 In-field** · task from No. 6; example library from No. 14; cross-field cards that survived No. 14's kill test; papers from No. 3 ·
 conjectures matching the whole library, passed up to No. 8 (to No. 4 directly in Phase −1); tried ideas with sources; literature examples as seeds for No. 14 · board ·
 passing anything straight to No. 9; choosing the test case for its own conjecture · arxiv-mcp-server, academic-research-skills · any.
-**No. 11 Adjacent / No. 7 Far** · obstacle or motif from No. 6 · far-analogy card (table, breaks, prediction, kill test) → No. 14 · board ·
+**No. 11 Adjacent / No. 7 Far** (No. 7 core, on by default: receives every obstacle No. 6 assigns) · obstacle or motif from No. 6 · far-analogy card (table, breaks, prediction, kill test) → No. 14; every card recorded in the far-analogy graph at once (`add_connection.py`), updated with No. 14's kill-test result · board, the graph's `data/found.yaml` (via the script only) ·
 passing directly to No. 9 or No. 10; searching after reading the other wing · far-analogy skill.
 **No. 8 Blueprint** (between the front three and No. 10) · locked statement, conjectures from No. 10 · lemma graph; the next lemma for No. 9; requests to No. 14 for examples of each lemma; shared definitions locked in Lean with No. 1 · board structure (with No. 6) · proving lemmas itself · leanblueprint-style graph.
 **No. 14 Examples** (front line, left) · requests from every seat via the board (ordered by No. 6); cards from No. 7/11; seeds from No. 10 ·

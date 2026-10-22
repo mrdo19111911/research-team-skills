@@ -21,8 +21,8 @@ SKILL = pathlib.Path(__file__).resolve().parent.parent
 REFS = SKILL / "references"
 SCRIPTS = SKILL / "scripts"
 
-CORE = [6, 14, 10, 8, 4, 9, 2, 3, 1]
-WINGS = [11, 7]
+CORE = [6, 14, 10, 8, 4, 9, 2, 3, 1, 7]
+WINGS = [11]
 SEATS = CORE + WINGS
 # Fallback names, used only if a card header cannot be parsed.
 NAMES = {1: "Final verifier", 2: "Proof-checker", 3: "Novelty", 4: "Breaker", 6: "Coordinator",
@@ -129,6 +129,12 @@ def seat_prompt(seat, variant, problem, cards, fmt, laws, roles):
     if seat == 1:
         out += ["- You are the sole writer of `.team/bank.md`: append only; record the final check and the kinds of"
                 " independence achieved (model / context / tool), never more than achieved."]
+    if seat in (7, 11):
+        add = (SKILL.parent / "far-analogy" / "scripts" / "add_connection.py").as_posix()
+        out += ["- Use the far-analogy skill for every card. Record each card in its graph the moment you make it:",
+                f"  `python {add} --name ... --a ... --b ... --map \"x = y; ...\" --breaks ... --small-test \"not run\""
+                f" --problem \"{problem}\"`; when No. 14 reports the kill test, run `--update F<id> --small-test alive|dead`.",
+                "  Dead connections are recorded too: they stop the next agent from proposing them again."]
     if seat == 14:
         out += ["- You own `.team/examples/`: the example library and the worked example with its rerunnable script."]
     if seat == 6:
@@ -149,7 +155,7 @@ Current phase: −1 Examples (No. 6 alone switches phase; references/phases.md)
 | {today} | −1 Examples | (set by No. 6) | a conjecture predicts a case written down before No. 14 computes it, and the prediction is right | No. 6 |
 
 ## Seats switched on
-Core (staffed every campaign): 6, 14, 10, 8, 4, 9, 2, 3, 1. Wings (off until No. 6 switches them on here): 11, 7.
+Core (staffed every campaign): 6, 14, 10, 8, 4, 9, 2, 3, 1, 7 (No. 7 far field on by default). Wing (off until No. 6 switches it on here): 11.
 | Date | Seat | On/off | Task | Budget | Model family |
 |---|---|---|---|---|---|
 

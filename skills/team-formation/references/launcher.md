@@ -24,8 +24,9 @@ relevant fragments, tabu log, its requests) + the task in one paragraph with its
   (e.g. `TEAM_SEAT=2 claude -p "<prompt>"` in the campaign directory, or No. 1 in its own worktree); if you use the
   Agent tool for them anyway, the sealed-verdict rule holds by prompt only: record that on the board.
 - One task per spawn. The agent returns a board fragment (templates.md); No. 6 appends it to the board at agent-level.
-- Spawn a seat only when there is a task and budget for it. Core seats: 6, 14, 10, 8, 4, 9, 2, 3, 1.
-  Wings 11 and 7: only after No. 6 writes "switched on" for them in the board's "Seats switched on" table.
+- Spawn a seat only when there is a task and budget for it. Core seats: 6, 14, 10, 8, 4, 9, 2, 3, 1, 7.
+  No. 7 (far field) gets every obstacle No. 6 assigns, from Phase −1 on. Wing 11: only after No. 6 writes "switched on"
+  for it in the board's "Seats switched on" table.
 - Independent tasks go out in one message (parallel spawns). Generator squads: 3–5 agents, play alone first (squads.md).
 
 ## 2. Phases (phases.md; No. 6 alone switches phase and writes budget and stop condition on the board first)
@@ -38,11 +39,12 @@ relevant fragments, tabu log, its requests) + the task in one paragraph with its
    No. 14 checks the statement on the whole library. Software: acceptance tests from the spec, locked before code.
 3. **Phase 1 Explore.** No. 10 → No. 8 (next lemma) → No. 4 tries to break it → No. 9 proves and submits.
    No. 3 runs the quick novelty check on each new branch and load-bearing lemma. Cross-field cards from No. 11 / No. 7
-   go to No. 14's kill test, then No. 10, never straight to No. 9.
+   go to No. 14's kill test, then No. 10, never straight to No. 9. No. 7 records each card in the far-analogy graph when
+   it is made (`add_connection.py ... --small-test "not run"`) and updates it with No. 14's result (`--update F<id> --small-test alive|dead`).
 4. **Phase 2 Counter-press** (a load-bearing lemma broke). Spawn 14, 4, 10, 8, 9 on that exact point within a window;
    No. 2 gives only the error location; the patch goes to a fresh No. 2.
 5. **Phase 3 Verify.** Sealed verdict flow (step 3), with No. 2 as a squad if the budget allows; No. 14 feeds data to No. 2;
-   wings and No. 10 off. Pass → No. 1 → bank → back to Phase 1 for the next lemma; fail → Phase 2.
+   No. 11 and No. 10 off; No. 7 at low budget. Pass → No. 1 → bank → back to Phase 1 for the next lemma; fail → Phase 2.
 
 ## 3. Sealed verdicts (every submission)
 1. No. 9 writes the submission (templates.md); No. 6 creates `.team/verdicts/<submission-id>/`.

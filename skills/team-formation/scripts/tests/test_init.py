@@ -8,7 +8,7 @@ import unittest
 
 INIT = pathlib.Path(__file__).resolve().parent.parent / "init_team.py"
 SEATS = [6, 14, 10, 8, 4, 9, 2, 3, 1, 11, 7]
-WINGS = {11, 7}
+WINGS = {11}
 
 
 def run(camp, variant="math", problem="Prove the bound", *extra):

@@ -8,7 +8,7 @@
 | 8 | lemma graph | API contract, frozen | SA |
 | 9 | proof | API, business logic, data | BE |
 | 11 | adjacent field | UI | FE |
-| 7 | far field | mobile / data / infra (optional) | per project |
+| 7 | far field | mobile / data / infra; cross-field ideas by default | per project |
 | 10 | literature | read codebase, docs | Dev |
 | 14 | examples | benchmark, profiling | Performance |
 | 6 | coordinator | tasks, issue tracker | Tech lead / PM |

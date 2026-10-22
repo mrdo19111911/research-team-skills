@@ -5,8 +5,8 @@ Three Claude Code skills for running a multi-agent research campaign on a hard p
 
 | Skill | What it does |
 |---|---|
-| [`team-formation`](skills/team-formation/SKILL.md) | An 11-seat agent team laid out as a football formation. The attack generates ideas freely; nothing counts until two independent defenders and a final verifier pass it. Includes hooks that stop the attack from editing the locked statement and stop judges from reading each other's verdicts before they are sealed. |
-| [`far-analogy`](skills/far-analogy/SKILL.md) | Gets past a concrete obstacle by borrowing a tool from a distant field, through a structured analogy that ends in a testable prediction. Ships a graph of mathematical correspondences (`data/`). |
+| [`team-formation`](skills/team-formation/SKILL.md) | An 11-seat agent team laid out as a football formation; the far-field seat (No. 7) is always on. The attack generates ideas freely; nothing counts until two independent defenders and a final verifier pass it. Includes hooks that stop the attack from editing the locked statement and stop judges from reading each other's verdicts before they are sealed. |
+| [`far-analogy`](skills/far-analogy/SKILL.md) | Gets past a concrete obstacle by borrowing a tool from a distant field, through a structured analogy that ends in a testable prediction. Ships a graph of mathematical correspondences (`data/`); every card found is recorded in `data/found.yaml` by `scripts/add_connection.py`, alive or dead. |
 | [`paper-editor`](skills/paper-editor/SKILL.md) | The goalkeeper's (No. 1) write-up skill: turns the bank of verified results into a paper, one bank entry per claim, checked by fresh defenders before release. |
 
 ## Install
@@ -40,6 +40,7 @@ Then merge `<campaign-dir>/.team/hooks.settings.json` into `<campaign-dir>/.clau
 ```bash
 python skills/team-formation/scripts/tests/test_hooks.py
 python skills/team-formation/scripts/tests/test_init.py
+python skills/far-analogy/scripts/tests/test_add_connection.py
 ```
 
 ## Status and known limits

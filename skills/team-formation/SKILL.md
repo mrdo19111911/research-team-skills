@@ -12,8 +12,9 @@ Nobody on the attack may touch the grader.
 ## The 11 seats (details in references/formation.md, one card per seat in references/role-cards.md)
 A seat is a role on the roster, not a running agent. No. 6 spawns an agent for a seat only when it has a task
 and budget for it; a seat with no agent costs nothing.
-**Nine core seats**, staffed in every campaign because the goal path runs through them: 6, 14, 10, 8, 4, 9, 2, 3, 1.
-**Two wing seats**, No. 11 and No. 7, are switched on by No. 6 per problem: when every in-field direction is dead, or a cross-field idea is wanted.
+**Ten core seats**, staffed in every campaign: 6, 14, 10, 8, 4, 9, 2, 3, 1 (the goal path runs through them) and **No. 7 Far-field, on by default**:
+every task No. 6 assigns also goes to No. 7 as an obstacle, and every card No. 7 makes is recorded in the far-analogy graph.
+**One wing seat**, No. 11 (adjacent field), is switched on by No. 6 per problem.
 Top to bottom: front three 14 – 9 – 4 · No. 8 · midfield 11 – 10 – 7 · No. 6 · back line 3 – 2 · goalkeeper 1.
 Front three: examples, proof and counterexamples attack together. No. 8 links midfield to attack. Midfield builds and feeds. A thin, independent back line judges.
 | Line | Seat | Job |
@@ -24,7 +25,7 @@ Front three: examples, proof and counterexamples attack together. No. 8 links mi
 | Link | No. 8 Blueprint (between attack and midfield) | turns No. 10's conjectures into a lemma graph; hands No. 9 the next lemma; asks No. 14 for examples of each lemma; locks shared definitions with No. 1 |
 | Midfield | No. 11 Adjacent-field (left) | ideas from nearby fields, as far-analogy cards: short pass to No. 14 for the kill test, then No. 10 |
 | | No. 10 In-field (center) | literature; turns the example library into conjectures; passes them up to No. 8 (in Phase −1, before any lemma graph, straight to No. 4) |
-| | No. 7 Far-field (right) | ideas from distant fields, as far-analogy cards: long ball to No. 14 for the kill test, then No. 10 |
+| | No. 7 Far-field (right, core, on by default) | ideas from distant fields, as far-analogy cards: long ball to No. 14 for the kill test, then No. 10; records every card in the graph (`far-analogy/scripts/add_connection.py`) |
 | Base | No. 6 Coordinator | assigns tasks, sets phase and budgets, kills directions; owns the board; talks to the coach |
 | Defense | No. 2 Proof-checker | step errors; runs each step on the worked example; hunts counterexamples to each lemma of a submitted proof; co-locks the statement with No. 1 |
 | | No. 3 Novelty | prior work; checks every citation exists and says what is claimed |
@@ -111,6 +112,8 @@ A step that gives a wrong value there is wrong. Passing proves nothing general; 
 - Every result enters the board as a fragment (references/templates.md) at the lowest label.
 - Labels rise only with evidence, computed from the append-only evidence log.
 - Every dead direction goes to the tabu log with its reason and scope.
+- Every far-analogy card, alive or dead, is recorded in the far-analogy graph the moment it is made, and updated
+  when No. 14's kill test comes back (No. 7 runs `add_connection.py`; far-analogy SKILL.md, step 6).
 
 ## Label ladder
 agent-level → not wrong on the worked example (a filter: passing proves nothing general) → survived counterexample search (No. 4 on the conjecture, No. 2 on each lemma) → step-checked → novelty-cleared → then the strongest check available:

@@ -18,6 +18,8 @@
   source: <DOI, arXiv id, or book + theorem number; "none" if unsure>
   source_checked: no | exists | content-matches
 ```
+Edges in `data/found.yaml` also carry `small_test: alive | dead | not run`, `found: <date>` and `seen:` (one line per
+card that met the connection again, with date, problem and kill-test result). IDs are F001, F002, ...
 (The Vietnamese graph uses ten/trang_thai/gia_thiet/dich/cho_gay/nguon/nguon_da_kiem; the tools read both.)
 
 ## Four operations

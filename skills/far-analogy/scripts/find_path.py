@@ -6,10 +6,11 @@ Usage:
   python scripts/find_path.py --family-of "<node>" python scripts/find_path.py --stats
 Data: every *.yaml in data/ except families.yaml (or env GRAPH=file1,file2). Reads English
 (name/status/hyp) and Vietnamese (ten/trang_thai/gia_thiet) schemas.
-A family hop is NOT a correspondence: any path using one is downgraded to heuristic."""
+A family hop is NOT a correspondence: any path using one is downgraded to heuristic.
+Edges with small_test: dead (killed connections in data/found.yaml) are skipped."""
 import os, sys, re, glob, unicodedata, collections, signal, yaml
 from collections import deque
-signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+if hasattr(signal, "SIGPIPE"): signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 files = os.environ["GRAPH"].split(",") if os.environ.get("GRAPH") else \
     [f for f in sorted(glob.glob(os.path.join(ROOT, "data", "*.yaml"))) if not f.endswith("families.yaml")]
@@ -19,6 +20,7 @@ def g(e, *k): return next((e[x] for x in k if e.get(x)), "")
 E = []
 for f in files:
     for e in yaml.safe_load(open(f, encoding="utf-8")) or []:
+        if e.get("small_test") == "dead": continue  # killed connections are kept on record, never used as paths
         st = g(e, "status", "trang_thai"); E.append(dict(id=e["id"], name=g(e, "name", "ten"), a=e["a"], b=e["b"],
             status=VI.get(st, st) if VI.get(st, st) in ORDER else "heuristic", hyp=g(e, "hyp", "gia_thiet")))
 FP = os.path.join(ROOT, "data", "families.yaml")

@@ -3,7 +3,7 @@
 Top to bottom: front three 14 – 9 – 4 · No. 8 · midfield 11 – 10 – 7 · No. 6 · back line 3 – 2 · goalkeeper 1.
 Research starts by attacking concrete cases: examples (14) and counterexamples (4) play next to the prover (9).
 No. 8 sits between attack and midfield: every conjecture reaches the front three as a lemma graph.
-Core seats (solid border on the formation slide): 6, 14, 10, 8, 4, 9, 2, 3, 1. Wing seats switched on per problem (dashed border): 11, 7.
+Core seats (solid border): 6, 14, 10, 8, 4, 9, 2, 3, 1, and No. 7 (far field, on by default). Wing seat switched on per problem (dashed border): 11.
 
 ## Seats
 Front three: No. 14 Examples (left; hunts meaningful examples, computes the worked example A to Z, keeps the
@@ -15,7 +15,7 @@ Link: No. 8 Blueprint (between the front three and No. 10; turns No. 10's conjec
 the next lemma, asks No. 14 for examples of each lemma, locks shared definitions in Lean with No. 1 early).
 Midfield: No. 11 Adjacent-field (left, under No. 14; ideas from nearby fields → short pass to No. 14 for the kill test → No. 10) ·
 No. 10 In-field (center; reads literature, turns the example library into conjectures, passes them up to No. 8) ·
-No. 7 Far-field (right; ideas from distant fields → long ball to No. 14 for the kill test → No. 10).
+No. 7 Far-field (right; core, on by default; ideas from distant fields → long ball to No. 14 for the kill test → No. 10; records every card in the far-analogy graph).
 Base: No. 6 Coordinator (assigns tasks, kills directions, changes formation, retracts nodes; owns the board; talks to the coach).
 Defense: No. 3 Novelty (left back; citations, prior work, credit) · No. 2 Proof-checker (right back; step errors,
 runs each step on the worked example, hunts counterexamples to each lemma of a submitted proof; co-locks the
