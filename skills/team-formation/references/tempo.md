@@ -35,6 +35,20 @@ Closed lanes (independence of the judges):
   the sealed-verdict flow (laws.md);
 - No. 4 never receives a proof to judge; only No. 1 writes the bank.
 
+**Work goes direct; decisions go through a coordinator.** A pass that only moves work (an example, a paper, a card,
+a counterexample, a baseline) goes straight to the receiver; the lane coordinator reads the inbox copy afterwards, in
+parallel, and never stands in the way. Four kinds of pass are gated: the sender writes it to the lane coordinator's
+inbox (`.team/inbox/6/`) instead, and the receiver starts only after the coordinator writes `GO <pass file>` (or
+`NO <pass file>: <reason>`) on its lane file:
+1. **starting a costly direction**: anything that asks No. 9 to prove or build, or opens a new branch of the lemma
+   graph (why: a "win" can flip under one parameter; in the UAV pilot a first result flipped with a tolerance and the
+   gate stopped No. 9 from building on it);
+2. **crossing lanes** (scouting → build, build → verification);
+3. **stopping or killing a direction** (the head No. 6 owns stop criteria);
+4. **anything bound for a judge** (No. 2, No. 1, a judging No. 3): it goes through the sealed-verdict flow, never as a pass.
+A coordinator answers a gated pass before any other work (target: its next action). If it has not answered by the time
+the sender's next task ends, the head No. 6 answers instead.
+
 Who wakes the receiver:
 - **Teammate messaging available** (agents that can message each other, e.g. Claude Code agent teams with
   SendMessage): the sender messages the receiver directly, and also writes the inbox file (it is the record).
@@ -79,6 +93,8 @@ second agent; two agents producing the same thing means the split was wrong; a s
   `log_event.py note --seat <seat> --agent <id> --note "..."`.
 - **Pass directly** along the open lanes (inbox file + `log_event.py pass`); do not wait for No. 6 to relay.
   Open lanes: 14 ⇄ 10, 14 ⇄ 4, 10 ⇄ 4, 7 → 14, 11 → 14, 10 → 8, 8 → 4, 8 → 9, 4 → 9, 14 → 9, 10 → 3, 8 → 3, 3 → 10, 3 → 8.
+- **Work goes direct; decisions go through a coordinator.** Send to `.team/inbox/6/` and wait for `GO` when the pass
+  would start a costly direction (asks No. 9 to prove or build, opens a new branch), crosses lanes, or stops a direction.
 - **Never pass directly to a judge** (No. 2, No. 1, a judging No. 3): they receive only submissions through the
   sealed-verdict flow. Only No. 1 writes the bank.
 - **If a tool refuses or a library is missing, report it in a progress line; do not work around it.**

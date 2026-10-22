@@ -108,8 +108,10 @@ A step that gives a wrong value there is wrong. Passing proves nothing general; 
 ## Tempo (references/tempo.md)
 - **Kickoff at minute 0**: right after setup, spawn every agent in `.team/kickoff.md` in ONE message (two No. 10 on
   literature, two No. 14 on examples, No. 3 novelty scan, No. 7, No. 4), before writing anything else.
-- **Direct passes**: attack and midfield pass to each other through `.team/inbox/<seat>/`, not through No. 6. Judges
-  (No. 2, No. 1, a judging No. 3) receive only submissions, through the sealed-verdict flow.
+- **Direct passes**: attack and midfield pass work to each other through `.team/inbox/<seat>/`, not through No. 6.
+  Decisions are gated: a pass that starts a costly direction (No. 9 to prove or build, a new branch), crosses lanes or
+  stops a direction waits for its lane coordinator's `GO`. Judges (No. 2, No. 1, a judging No. 3) receive only
+  submissions, through the sealed-verdict flow.
 - **Several coordinators**: head No. 6 keeps phase, stop criteria, budget and SEALED; lane coordinators 6a scouting,
   6b build, 6c verification each own one lane file in `.team/board/`. About one coordinator per five running agents.
 - **Progress at once**: every agent writes its plan within its first minute and one line per partial result
