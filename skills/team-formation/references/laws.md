@@ -14,6 +14,10 @@ The bank entry lists, per result, which kinds each judge had. "Independent" with
 ## Sealed verdicts
 Each judge (No. 2, No. 3, every member of a judging squad) writes its verdict alone to its own file, unreadable by the others, and seals it.
 Only after all verdicts are sealed are they and the shared board opened to the judges. No. 6 sees "submitted / not yet", never content, until then.
+No. 6 lists the expected judges in the submission's board row when it opens the submission; when every one shows "submitted"
+(a file exists for each), No. 6 writes `.team/verdicts/<submission-id>/SEALED`. The hook does not count files; No. 6 does.
+A patch after a failed verdict is a new submission `<id>-p<n>`, judged by a fresh No. 2 (a bench agent with empty context,
+same model-family rule as any No. 2); the old verdicts stay as they are.
 
 ## Two stores
 - **Bank (verified results)** – owned by the goalkeeper; written only by No. 1, with the strength of the final check recorded (see ladder). Like the official scoreboard.

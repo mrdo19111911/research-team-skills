@@ -4,8 +4,10 @@ No. 1 (the editor) is the party being judged here, so it does not judge its own 
 
 ## Setup
 - Freeze the draft as a candidate (PDF + .tex hash) before spawning judges; judges see that exact file.
-- Each judge writes to its own file `<paper folder>/review_notes/draft_check/<seat>_<hash>.md`, unreadable by
-  the other until both are sealed. No. 6 sees "submitted / not yet" only.
+- The draft check is a submission with id `draft-<short-hash>`. Each judge files a sealed verdict at
+  `.team/verdicts/draft-<short-hash>/<seat>.md` (in the campaign's `.team/`, not in the paper folder);
+  team-formation's `guard_sealed.py` hook keeps it unreadable by the other judge until No. 6 writes `SEALED` there, once both
+  have filed. No. 6 sees "submitted / not yet" only.
 - Spawn fresh agents (bench), never agents that saw the drafting.
 
 ## No. 2: statements and proof sketches
@@ -25,6 +27,13 @@ For every citation: exists (DOI / arXiv id resolved) · says what the sentence c
 credit sentence ("known from [x]" / "new here") matches the novelty verdict · no prior work omitted that the
 verdict named. Search criteria and sources stated. Verdict: pass / fail per citation.
 
+## ml mode additions (ml-mode.md §6)
+No. 2 also receives the run logs, the results spec and `results.tex`: runs `trace_numbers.py --check` and `--scan`
+itself; recomputes at least one table from raw logs; checks every claim sentence states dataset/split, budget,
+seeds and statistic; "outperforms"/"significant" only where the bank's pre-registered test passed; ablations on
+validation; failed runs listed match the bank. No. 3 also: concurrent arXiv work (queries, dates); every cited
+number against the cited paper's table (table and row in the verdict).
+
 ## Verdict template
 ```
 SEAT: | DRAFT: (file, hash) | VERDICT: pass / fail | ROWS FAILED: (paper ref, bank id) |
@@ -33,6 +42,7 @@ EVIDENCE: (locked vs typeset wording / step k on the example / source page) | SE
 
 ## After sealing
 Any fail → No. 1 fixes the cheapest way (E2: fix the statement, add a hypothesis, add a sentence) and the
-failing judge re-checks the changed rows only, in a fresh context. A fail that needs a stronger result is not
+failing judge's seat re-checks the changed rows only, in a fresh context. A fail that needs a stronger result is not
 fixed in the paper: the claim is weakened to the locked one, or the request goes to No. 6 for the team.
-Record both verdicts and their independence in the companion verification note.
+After sealing, No. 1 copies both verdicts, with their independence, into the companion verification note.
+A re-check after a fix is a new submission `draft-<new-short-hash>`, judged in a fresh context.

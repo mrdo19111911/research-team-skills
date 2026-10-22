@@ -5,7 +5,7 @@ A multi-agent Workflow script could automate the loop below, but running a Workf
 opt-in; without it, run the steps by hand with the Agent tool.
 
 ## 0. Set up (once)
-1. `python <skill>/scripts/init_team.py <campaign-dir> --variant math|software|algorithm --problem "<one line>"`.
+1. `python <skill>/scripts/init_team.py <campaign-dir> --variant math|ml|software|algorithm --problem "<one line>"`.
    Rerunning is safe: existing files are skipped; `--refresh-seats` rebuilds `seats/*.md` from the role cards.
 2. Merge `.team/hooks.settings.json` into `<campaign-dir>/.claude/settings.json` (guard_locked, guard_sealed,
    precompact_handoff, by absolute path). Hooks load at session start: restart the session after merging.

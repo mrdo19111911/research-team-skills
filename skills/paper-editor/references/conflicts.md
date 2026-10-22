@@ -30,3 +30,24 @@ Default settlements below; items marked AUTHOR are open until the author decides
    context independence only (laws.md: never claim more).
 9. **"Deepest idea before theorems"** (structure-first) vs **main result by page 2** (B1). Settlement: the idea is
    told in words in the story paragraph; the theorem follows on page ≤ 2; the full idea of the proof follows the example.
+
+## ML mode (added 2026-10-22)
+10. **No status labels in the body vs settings and uncertainty in the body.** D5/E5 keep status labels, AI and Lean
+   out of the body; an ML claim is meaningless without its dataset/split, budget, seeds and statistic. Settlement:
+   the setting and the uncertainty are part of the claim itself, not a status label; they are written next to the
+   claim. What stays out of the body is unchanged: verification labels, Lean, AI, team process, the claim map.
+11. **No trace of AI in the paper vs venue disclosure policies.** Some venues require a statement on the use of
+   language models. Settlement (default): where the venue requires it, one statement in the place the venue names,
+   written by the author; nothing else about AI or the team. AUTHOR: confirm per venue.
+12. **Page budget.** Math mode: body 15–25 pages (unchanged). ML mode: the venue's page limit wins; appendix per
+   venue rules; the main result still by page 2.
+13. **"The editor never computes" vs derived numbers.** A difference, ratio or average of banked numbers is
+   arithmetic, not a new result: computed by `trace_numbers.py` from full-precision sources, never by hand. A claim
+   of superiority or significance is not arithmetic: it needs the bank's pre-registered test.
+14. **Failed runs vs "no trace of the writing process".** Failed and discarded runs are results of the experiment,
+   not of the writing; they are reported (ml-mode.md §2.7). Drafting history stays out.
+15. **Team word "sealed".** "Sealed test set" is team jargon; the paper says "held-out test set, evaluated once".
+16. **Reproducibility statement vs double-blind review.** Code, commit and configs are named; for anonymous review the
+   link points to an anonymized copy of the same commit, replaced by the real one in the final version.
+17. **"Conjectures and open problems" section.** Math mode only. In ML mode, claims the bank does not support
+   (validation-only, one seed, untested settings) go to limitations or future work, worded as untested, never as results.

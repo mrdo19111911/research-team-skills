@@ -1,6 +1,6 @@
 ---
 name: team-formation
-description: Set up and run an 11-seat multi-agent research team (math proofs, algorithm research, or software) laid out as a football formation, with an untouchable grader, independent defenders and phase changes. Use when asked to organize agents for a hard problem, start a research campaign, decide how many agents per seat, or change team shape mid-campaign.
+description: Set up and run an 11-seat multi-agent research team (math proofs, empirical machine learning, algorithm research, or software) laid out as a football formation, with an untouchable grader, independent defenders and phase changes. Use when asked to organize agents for a hard problem, start a research campaign, decide how many agents per seat, or change team shape mid-campaign.
 ---
 
 # Team formation
@@ -36,18 +36,19 @@ forming, so No. 4 attacks next to No. 14. Having watched the conjecture grow, No
 never judges a submitted proof. That judgment stays with No. 2 (fresh context, different model family), who
 hunts counterexamples to every lemma of the submission. Still 11 seats, one kind of job per seat.
 
-Off pitch (officials, not players, no number): **Coach** (the human: sets problems, receives only goals and phase reports) ·
+Off pitch (officials, not players, no number): **Coach** (the human: sets problems, writes directives in `.team/bulletin.md`
+(every seat reads it first; persist-or-reframe decisions are the coach's), receives goals and phase reports) ·
 **Bench** (fresh agents for substitution) · **Sparring team** (plants false variants, measures defenders' catch rate) ·
-**Bank / scoreboard** · **Performance referee** (algorithm research only: owns instance sets, sealed set, harness and
+**Bank / scoreboard** · **Performance referee** (ML and algorithm research only: owns datasets or instance sets, sealed set, harness and
 statistics; outside the offside line, no seat can edit it). There is no 12th player.
-Software and algorithm-research variants reuse the same seats: references/coding-team.md.
+ML, software and algorithm-research variants reuse the same seats: references/coding-team.md. Full seat prompts: references/seats/.
 
 **Goal path:** 6 → 14 (examples) → 10 (conjecture) → 8 (lemma graph) → 9 ⇄ 4 (No. 4 tries to break each lemma
 before No. 9 invests in it) → 9 submits → 2, 3 independently → 1 → bank, and No. 1 reports back to No. 6.
 One order everywhere: proposal (10) → lemmas (8) → early counterexample attack (4) → proof (9) → independent check
 (2, 3) → final check (1). Phase −1 exception: no lemma graph yet, so No. 10 hands conjectures straight to No. 4.
 Backtracking only with evidence: any defender fails it → back to 9 with the evidence; a failure on an example → back to 14.
-**Early novelty check:** when a branch opens, and when No. 8 puts a load-bearing lemma into the graph, No. 3 asks
+**Early novelty check:** when a branch opens, and when No. 8 puts a load-bearing lemma (one the main result cannot do without) into the graph, No. 3 asks
 "is this already known?" (a quick search, before effort is spent). The full source check stays before the bank.
 **The front three form a triangle**, all working on the same conjecture: 14 → 9 the worked example · 9 ⇄ 4 a lemma
 No. 9 wants to use, and "broken" or "not broken" · 4 ⇄ 14 a new case (prediction written first) and numerical data.
@@ -89,14 +90,14 @@ A step that gives a wrong value there is wrong. Passing proves nothing general; 
    compaction; else a token estimate (default 50%, tunable, not a measured optimum); also on visible fatigue (references/substitution.md).
 
 ## Setup (once per campaign)
-1. **Pick the variant**: math, software, or algorithm research.
+1. **Pick the variant**: math (incl. theory of ML), ml (empirical machine learning), software, or algorithm research.
 2. **Phase −1, examples** (above), then **Phase 0, lock the problem**: No. 1 and No. 2 formalize the conjecture
    independently, diff, lock; the locked statement must hold on the whole example library and reject every counterexample.
    Software: acceptance tests from the spec first.
-3. **Scaffold**: `python scripts/init_team.py <campaign-dir> --variant math|software|algorithm --problem "..."` creates
-   `.team/` (board, bank, locked.txt, verdicts/, handoff/, examples/, metrics.md) and one system-prompt file per seat
+3. **Scaffold**: `python scripts/init_team.py <campaign-dir> --variant math|ml|software|algorithm --problem "..."` creates
+   `.team/` (board, bank, bulletin.md for the coach's directives, templates/, locked.txt, verdicts/, handoff/, examples/, metrics.md) and one system-prompt file per seat
    from the role cards; list locked paths in `.team/locked.txt`; install the hooks (below). Running a campaign: references/launcher.md.
-4. **Model families**: defenders (No. 2, No. 3) on a different model family from the attack; No. 4 on a different family from No. 10. If none is available,
+4. **Model families**: defenders (No. 2, No. 3) on a different model family from the attack; No. 4 on a different family from No. 10 (else at least a fresh context). If none is available,
    use different prompts and no shared context, and record in the bank that independence is weaker.
 5. **Create the board and the bank** (`.team/board.md`, `.team/bank.md`). Board = working state, structure owned by No. 6.
    Bank = verified results, written only by No. 1.

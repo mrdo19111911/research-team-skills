@@ -1,7 +1,7 @@
 # Research team skills for Claude Code
 
 Three Claude Code skills for running a multi-agent research campaign on a hard problem
-(mathematical proofs, algorithm research, or software) and writing the verified results up as a paper.
+(mathematical proofs, empirical machine learning, algorithm research, or software) and writing the verified results up as a paper.
 
 | Skill | What it does |
 |---|---|

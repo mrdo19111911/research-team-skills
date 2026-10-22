@@ -7,6 +7,7 @@ import tempfile
 import unittest
 
 INIT = pathlib.Path(__file__).resolve().parent.parent / "init_team.py"
+SKILL = INIT.parent.parent
 SEATS = [6, 14, 10, 8, 4, 9, 2, 3, 1, 11, 7]
 WINGS = {11}
 
@@ -61,7 +62,9 @@ class InitTeam(unittest.TestCase):
             seat_lines = [l for l in text.splitlines() if l.startswith("TEAM_SEAT=")]
             self.assertEqual(seat_lines, [f"TEAM_SEAT={s}"], s)
             self.assertIn(f"No. {s}", text)
-            self.assertIn("**No.", text, f"role card missing for {s}")
+            full = (SKILL / "references" / "seats" / f"{s}.md").exists()
+            self.assertIn("## What you do" if full else "**No.", text, f"seat prompt missing for {s}")
+            self.assertIn("bulletin.md", text, s)
             self.assertNotIn("no card found", text, s)
             self.assertIn("1. **", text)  # the four laws
             self.assertIn("4. **", text)

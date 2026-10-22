@@ -1,4 +1,4 @@
-# Claim map
+# Claim map (math mode; ml rows: ml-mode.md §5)
 File: `<paper folder>/claim_map.md`, written by No. 1 only, rebuilt from the bank at step (a), updated at every edit.
 One row per statement the reader could quote: theorem-like environments, displayed inequalities used later,
 "it is known that", "we observe", every special-case sentence, every number in the abstract and introduction.
@@ -32,3 +32,5 @@ Lean subagent; if only the algebraic core can be formalized, LEAN names that cor
 - No row without a paper ref, no paper ref without a row.
 - RELATION "weaker" rows: the paper text never claims the locked (stronger) form elsewhere.
 - Abstract and introduction numbers: each traced to a row; say in the text where the number comes from and its normalization.
+- Optional: numerical constants and computer-certified bounds as macros from `results.tex` (number-tracing.md §Math mode);
+  each such number has its own row with its label, and a "numerical evidence only" number is never a theorem's constant.

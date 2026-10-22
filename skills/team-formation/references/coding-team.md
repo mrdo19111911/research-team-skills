@@ -8,12 +8,12 @@
 | 8 | lemma graph | API contract, frozen | SA |
 | 9 | proof | API, business logic, data | BE |
 | 11 | adjacent field | UI | FE |
-| 7 | far field | mobile / data / infra; cross-field ideas by default | per project |
+| 7 | far field | cross-field ideas, on by default (also mobile / data / infra if the project needs it) | per project |
 | 10 | literature | read codebase, docs | Dev |
 | 14 | examples | benchmark, profiling | Performance |
 | 6 | coordinator | tasks, issue tracker | Tech lead / PM |
 | Coach | problems | spec, acceptance tests | PO / BA |
-Bank = main branch (only CI merges). Board = issue tracker + architecture decision records. In software, No. 11 and No. 7 take UI and mobile/data/infra work; the cross-field idea search they do in math is benched.
+Bank = main branch (only CI merges). Board = issue tracker + architecture decision records. In software, No. 11 takes UI work; No. 7 keeps the cross-field idea search on by default, and takes mobile/data/infra work only when the project needs it.
 
 Six coding rules: acceptance tests written and locked before implementation · never edit tests/CI/benchmarks ·
 one branch (git worktree) per agent, only CI merges · catch "built but never wired": counters on the real path, 0 calls = does not exist ·
@@ -40,6 +40,25 @@ Phases: 0 measure instance structure, slow reference, lock plug-in contract · 1
 2 regression on an instance group → swarm it · 3 full benchmark, ablations (validation), freeze configuration, sealed set opened once, novelty.
 Outer loop: No. 14 runs generate–score–keep; No. 6 optimizes how the inner loop searches.
 
+## ML research (empirical machine learning): same two referees
+Builds on the algorithm-research rules above (train / validation / sealed sets, pre-registration, many seeds, the sealed set
+opened once). Theory of ML (rates, bounds, convergence) runs as the math variant.
+| Seat | ML meaning |
+|---|---|
+| 14 | small fast experiments; reproduces each baseline first (its reported number, on our harness) before anything is compared to it |
+| 4 | breaks results: data leakage, test-set contamination (also in pretraining data), untuned or unfair baselines, one lucky seed, metric chosen after the fact |
+| 9 | builds the method and the experiment code |
+| 8 | experiment plan: claims → experiments → ablations, each with a pre-registered win condition |
+| 10 | literature, open benchmarks and their known pitfalls; proposes hypotheses |
+| 2 | code and statistics review; reruns from raw data; checks every table cell against the run logs |
+| 3 | novelty against ML venues and recent arXiv (concurrent work); checks each cited number against its source |
+| 1 | reruns the frozen configuration from a clean environment (pinned lockfile or container, stated hardware); then the performance referee opens the sealed test set once and No. 1 records the number |
+| 7 | far field, on by default: tools from physics, biology, economics, statistics ... |
+Performance referee (off pitch): owns datasets and splits, the sealed test set, the harness, the compute budget and the statistics.
+Measurement discipline: same compute budget for every method (tuning budget included) · k ≥ 5 seeds, mean with CI or median with IQR ·
+pre-registered metric and win condition · ablation per mechanism (validation set) · report compute (GPU-hours) and every failed run ·
+contamination check of the test set · every number in the paper traced to the run that produced it.
+
 ## Acceptance standards (shared seats, different meaning of "accepted")
 Software: accepted = acceptance tests written from the spec and locked before implementation all pass in CI, plus review.
 It means no failure was found on those cases; it does NOT mean the program is correct on all inputs.
@@ -48,3 +67,8 @@ Algorithm research: accepted = a measured performance claim on a stated instance
 with statistics. It is NOT a claim about other distributions, hardware or time caps.
 Bank entry: "gap to best known on set S: median / IQR over k seeds, feasibility rate, test <name> p = ..., hardware H, cap T,
 configuration frozen at <hash>, sealed set opened once on <date> (fresh sealed set: yes/no)".
+ML research: accepted = a measured claim on a stated dataset and split, compute budget and seeds, against baselines reproduced on
+the same harness and budget, with statistics. It is NOT a claim about other datasets, scales or budgets.
+Bank entry: "metric M on test set T (sealed, opened once on <date>): mean ± CI over k seeds; baselines (reproduced: yes/no, their
+reported vs our number); compute per method; test <name> p = ...; contamination check: <method, result>; config frozen at <hash>;
+run logs <paths>; scope: <main claim / restricted setting>".

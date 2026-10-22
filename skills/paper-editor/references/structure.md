@@ -1,4 +1,4 @@
-# Structure and style
+# Structure and style (math mode outline; the ml outline is ml-mode.md §2, the rest of this file applies to both)
 Sources: CLAUDE.md "Writing style for the paper"; WRITING_GUIDELINE.md A–G; my_revive_paper exemplars
 (Taylor–Drori arXiv 2101.09741: main result p. 2, 17-page body, one-page Lyapunov proof in the body,
 limit cases μ → 0 / k → ∞ recover OGM / TMM; Weinstein: first sentence a question, example before
@@ -43,6 +43,6 @@ Also banned (certificate-terminology note): "certificate" → weighted sum of in
 (multipliers λ); "residual" → remainder; "exact certificate" → weighted sum that proves a tight bound.
 "certificate" may appear at most once, citing Shu–Wang. Never rename LaTeX label keys.
 Team jargon never reaches the paper: bank, board, seat, No. N, kill test, tabu, sealed verdict, goal,
-label ladder, "worked example" as a team term (write "example").
+label ladder, "worked example" as a team term (write "example"), "sealed test set" (write "held-out test set").
 Galois groups, ruler-and-compass constructibility: excluded from text, framing and selling points.
 Check: `rg -n -w -i` over all .tex sources for every banned word; count must be 0 (C3).

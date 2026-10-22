@@ -20,9 +20,11 @@ From memory notes file-naming-by-title and version-naming (author's rules, 2026-
 claim map (claim-map.md rows) · per statement: Lean-checked / partly Lean-checked (which part) / not Lean-checked,
 Lean file, declaration, commit or file hash, `#print axioms` output · CAS and certification scripts with parameters ·
 No. 2 and No. 3 draft-check verdicts with kinds of independence · readability audit score (checklist F, before/after).
+ml mode: instead of Lean, the note holds the results spec, `results.tex`, the `--check` and `--scan` outputs,
+run-log paths, config hash and code commit (math mode may add them for traced constants).
 The paper body does not mention it (E5) unless the author chooses otherwise (conflicts.md §2).
 
 ## Reporting to the author
 Vietnamese, pedagogical (CLAUDE.md 1–7): the story of the paper in words, what is new, each main claim with its
-status label and Lean status, what is still missing, page counts vs budget, PDF paths of old and new versions.
+status label and Lean status (ml: its setting, statistic and scope), what is still missing, page counts vs budget, PDF paths of old and new versions.
 In chat math: at most one `_` per expression (latex-rendering note).
