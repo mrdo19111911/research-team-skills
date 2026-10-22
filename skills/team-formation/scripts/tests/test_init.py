@@ -97,6 +97,18 @@ class InitTeam(unittest.TestCase):
         self.assertIn("software variant", (self.team / "seats" / "9.md").read_text(encoding="utf-8"))
         self.assertIn("Prove the bound", (self.team / "board.md").read_text(encoding="utf-8"))
 
+    def test_tempo_kickoff(self):
+        run(self.camp)
+        kick = (self.team / "kickoff.md").read_text(encoding="utf-8")
+        for aid in ("10a", "10b", "14a", "14b", "3s", "7a", "4a"):
+            self.assertIn(f"## Agent {aid}", kick)
+        self.assertIn("ONE message", kick)
+        for s in SEATS:
+            self.assertTrue((self.team / "inbox" / str(s)).is_dir())
+            self.assertIn("## Tempo rules", (self.team / "seats" / f"{s}.md").read_text(encoding="utf-8"))
+        self.assertTrue((self.team / "progress").is_dir())
+        self.assertTrue((self.team / "board" / "lane-build.md").exists())
+
     def test_bad_variant(self):
         r = subprocess.run([sys.executable, str(INIT), str(self.camp), "--variant", "chess", "--problem", "x"],
                            capture_output=True, text=True)

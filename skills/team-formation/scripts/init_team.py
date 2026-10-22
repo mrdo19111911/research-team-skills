@@ -74,6 +74,58 @@ def card_format(text):
     return m.group(0) if m else "Format: RECEIVES · PRODUCES · MAY WRITE · FORBIDDEN · TOOLS · MODEL"
 
 
+def tempo_rules():
+    """The 'Rules for every seat' section of references/tempo.md (appended to every seat prompt)."""
+    text = read("tempo.md")
+    i = text.find("## Rules for every seat")
+    return text[text.index("\n", i) + 1:].strip() if i >= 0 else ""
+
+
+# The kickoff wave (references/tempo.md, rule 1): (agent id, seat, task). Spawned in ONE message right after setup.
+KICKOFF = [
+    ("10a", 10, "Literature review, classic sources: where does the coach's idea already live (named papers, books),"
+                " what is known, what is open. Write .team/examples/lit-10a.md."),
+    ("10b", 10, "Literature review, the last three years: recent papers on the coach's idea and its nearest"
+                " neighbours; what is open. Write .team/examples/lit-10b.md."),
+    ("14a", 14, "Smallest meaningful instance of the coach's problem: state it, compute it A to Z with a rerunnable"
+                " script in .team/examples/, label every value."),
+    ("14b", 14, "One realistic instance of the coach's problem: state it, the measurable quantity, a simple baseline,"
+                " and compute it with a rerunnable script in .team/examples/."),
+    ("3s", 3, "Quick novelty scan (not a verdict): is the coach's claim already known? List the five nearest papers"
+              " with one line each on what they already do. Write .team/examples/novelty-scan.md."),
+    ("7a", 7, "Far-analogy cards on the obstacle as the coach stated it: one or two cards, each recorded in the graph"
+              " (add_connection.py) and sent to No. 14's inbox for a kill test."),
+    ("4a", 4, "Edges of the coach's claim: where it must fail, and the simple baseline any proposal must beat. Write"
+              " .team/examples/edges-4a.md and pass the baseline to No. 14 and No. 10."),
+]
+
+
+def kickoff_text(problem, today):
+    log = (SCRIPTS / "log_event.py").as_posix()
+    out = [f"# Kickoff wave ({today}) — spawn ALL of these in ONE message, in parallel, before anything else",
+           f"Problem (coach): {problem}",
+           "Rule (references/tempo.md): no planning first; board details and budget are written while the wave runs.",
+           "Default wave budget: one task per agent; stop at the first verified-looking result or when the task is done.",
+           "For each agent: `log_event.py start` before the spawn, `stop` when it returns. Also start the coordinators:"
+           " head No. 6 and lane coordinators 6a (scouting), 6b (build), 6c (verification).", ""]
+    for aid, seat, task in KICKOFF:
+        out += [f"## Agent {aid} — No. {seat}",
+                f"Command before spawning: `python \"{log}\" start --seat {seat} --agent {aid}`",
+                "Prompt:", "```",
+                f"You are No. {seat}, agent {aid}, of a research team. TEAM_SEAT={seat}.",
+                f"Read your full system prompt in .team/seats/{seat}.md first, then .team/bulletin.md and your inbox"
+                f" .team/inbox/{seat}/.",
+                f"Problem (coach): {problem}",
+                f"Your task: {task}",
+                f"Progress at once: within your first minute write your plan in one line to"
+                f" .team/progress/{seat}-{aid}.md and run `python \"{log}\" note --seat {seat} --agent {aid} --note \"plan: ...\"`;"
+                " then one line after each partial result, with its label.",
+                "Pass directly along the open lanes (inbox file + log_event.py pass); never to a judge.",
+                "Return a board fragment (template in .team/templates/templates.md).",
+                "```", ""]
+    return "\n".join(out) + "\n"
+
+
 def four_laws(text):
     """The numbered laws of laws.md: from the top heading to the first ## section."""
     body = text.split("\n## ")[0]
@@ -145,7 +197,8 @@ def seat_prompt(seat, variant, problem, cards, fmt, laws, roles, mlroles=None):
                 " the sealed set, the harness, the compute budget and the statistics. No seat edits them.", ""]
     full = seat_file(seat)
     if full:
-        out += [full.replace("<far-analogy skill>", (SKILL.parent / "far-analogy").as_posix()), "", "## The four laws (from references/laws.md)", laws, ""]
+        out += [full.replace("<far-analogy skill>", (SKILL.parent / "far-analogy").as_posix()), "", "## The four laws (from references/laws.md)", laws, "",
+                "## Tempo rules (from references/tempo.md)", tempo_rules(), ""]
         return "\n".join(out) + "\n"
     out += ["## Your role card (from references/role-cards.md)", fmt, "",
             card or f"(no card found for No. {seat} in references/role-cards.md)", "",
@@ -156,6 +209,7 @@ def seat_prompt(seat, variant, problem, cards, fmt, laws, roles, mlroles=None):
             "- Post results as board fragments at the lowest label (template in `.team/templates/templates.md`).",
             "- Paths listed in `.team/locked.txt` are the grader: do not edit them.",
             "- Before you run out of context, write a handoff note to `.team/handoff/` (template in `.team/templates/templates.md`).",
+            "", "## Tempo rules (from references/tempo.md)", tempo_rules(),
             ]
     if seat in (2, 3):
         out += [f"- Write your verdict alone to `.team/verdicts/<submission-id>/{seat}.md`. Do not read any other"
@@ -357,14 +411,21 @@ def main(argv=None):
         p.write_text(text, encoding="utf-8", newline="\n")
 
     mkdir(team)
-    for d in ("verdicts", "handoff", "examples", "seats", "templates"):
+    for d in ("verdicts", "handoff", "examples", "seats", "templates", "progress", "board", "inbox"):
         mkdir(team / d)
+    for s_ in SEATS:
+        mkdir(team / "inbox" / str(s_))
+    for lane, seats_ in (("scouting", "14, 10, 7, 11, kickoff No. 3"), ("build", "8, 4, 9"),
+                         ("verify", "verdict flow, No. 1 hand-offs")):
+        write(team / "board" / f"lane-{lane}.md", f"# Lane {lane} (seats {seats_}); written only by its lane"
+              f" coordinator; one summary line per return (references/tempo.md, rule 3)\n")
     write(team / "board.md", board_text(a.variant, problem, today))
     write(team / "bank.md", bank_text(a.variant, problem, today))
     write(team / "locked.txt", locked_text(a.variant))
     write(team / "metrics.md", metrics_text(a.variant, problem, today))
     write(team / "hooks.settings.json", json.dumps(hooks_json(), indent=2) + "\n")
     write(team / "bulletin.md", bulletin_text(problem, today))
+    write(team / "kickoff.md", kickoff_text(problem, today))
     write(team / "templates" / "templates.md", read("templates.md") + bank_formats(read("coding-team.md")),
           overwrite=a.refresh_seats)
 
@@ -388,7 +449,7 @@ def main(argv=None):
         if not (SCRIPTS / s).exists():
             print(f"warning: hook script {s} not found in {SCRIPTS.as_posix()} (referenced anyway)", file=sys.stderr)
     print(f"next: merge {(team / 'hooks.settings.json').as_posix()} into the campaign's .claude/settings.json;"
-          " then follow references/launcher.md")
+          f" then spawn every agent in {(team / 'kickoff.md').as_posix()} in ONE message (references/tempo.md)")
     return 0
 
 

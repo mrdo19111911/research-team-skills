@@ -41,11 +41,12 @@ def load(path):
 
 
 def derive(evs, now=None):
-    """Return (intervals, passes, log). Times in seconds from the first event; open spells end at `now` if given."""
+    """Return (t0, end, intervals, passes, log, notes). Times in seconds from the first event; open spells end at `now` if given."""
     t0 = evs[0]["_t"]
     sec = lambda e: (e["_t"] - t0).total_seconds()
     end = max(sec(evs[-1]), (now - t0).total_seconds() if now else 0)
     open_, intervals, passes, log, last_writer, seen = {}, [], [], [], {}, {}
+    notes = []
     for e in evs:
         s, k, seat = sec(e), e.get("kind"), str(e.get("seat", ""))
         if k == "start":
@@ -70,6 +71,8 @@ def derive(evs, now=None):
                 if s - seen.get(key, -1e9) > PASS_WINDOW:
                     passes.append({"from": last_writer[p], "to": seat, "t": s, "what": p.split("/")[-1]})
                 seen[key] = s
+        elif k == "note" and e.get("note"):
+            notes.append({"seat": seat, "t": s, "text": str(e["note"])})
         elif k == "pass":
             passes.append({"from": str(e.get("from")), "to": str(e.get("to")), "t": s, "what": e.get("what", "")})
         label = {"start": "starts", "stop": "hands back", "read": "reads", "write": "writes", "pass": "passes",
@@ -78,8 +81,8 @@ def derive(evs, now=None):
         detail = e.get("what") or e.get("path") or e.get("note") or ""
         log.append({"t": s, "clock": e["_t"].strftime("%H:%M:%S"), "text": f"{who} {label} {detail}".strip()})
     for (seat, _), (st, note, agent) in open_.items():
-        intervals.append({"seat": seat, "a": st, "b": end, "note": note, "agent": agent})
-    return t0, end, intervals, passes, log
+        intervals.append({"seat": seat, "a": st, "b": end, "note": note, "agent": agent, "open": True})
+    return t0, end, intervals, passes, log, notes
 
 
 BUSY = 0.6  # a seat busy more than this share of the match is a candidate for a second agent next time
@@ -134,7 +137,7 @@ input[type=range]{flex:1;min-width:160px}
 #log .c{font-variant-numeric:tabular-nums;margin-right:6px}
 .player circle.body{transition:opacity .25s}.player.off{opacity:.38}
 .player.on .halo{opacity:1}.halo{opacity:0;transition:opacity .25s}
-.lbl{font:600 15px system-ui,Arial;fill:#fff}.num{font:700 22px system-ui,Arial;fill:#fff}
+.lbl{font:600 15px system-ui,Arial;fill:#fff}.prog{font:600 14px system-ui,Arial;fill:#fff8c4;paint-order:stroke;stroke:#1c2333;stroke-width:4px}.num{font:700 22px system-ui,Arial;fill:#fff}
 </style></head><body><main>
 <h1>__TITLE__</h1><p class="sub">A seat glows while its agent runs; a ball flies when information passes. <span id="span">__SPAN__</span></p>
 <div class="wrap"><div>
@@ -172,6 +175,7 @@ for(const s in S){const [name,x,y,col,wing]=S[s];if(!(s in S))continue;
  const t=el("text",{class:"num","text-anchor":"middle",y:8},g);t.textContent=/^\d+$/.test(s)?s:(s==="coach"?"C":"R");
  const w=Math.max(70,name.length*8.6+20);el("rect",{x:-w/2,y:38,width:w,height:26,rx:6,fill:"#1C2333","fill-opacity":.78},g);
  const lb=el("text",{class:"lbl","text-anchor":"middle",y:57},g);lb.textContent=name;
+ el("text",{class:"prog","text-anchor":"middle",y:88},g);
  G[s]=g;}
 function markUsed(){const used=new Set([...I.map(x=>x.seat),...P.flatMap(x=>[x.from,x.to])]);for(const s in G)G[s].style.opacity=used.has(s)?"":.18}
 const speeds=[10,30,60,120,300,600];const sp=document.getElementById("speed");
@@ -182,8 +186,10 @@ const BALL=()=>live?3:Math.max(4, Number(sp.value)*1.6); // seconds of match tim
 let t=0,playing=false,last=null;const clock=document.getElementById("clock"),scrub=document.getElementById("scrub");
 const t0=new Date(D.t0);
 function draw(){
- for(const s in G){const on=I.some(x=>x.seat===s&&x.a<=t&&t<=x.b);G[s].classList.toggle("on",on);G[s].classList.toggle("off",!on);
-  G[s].querySelector(".body").setAttribute("filter",on?"url(#glow)":"")}
+ for(const s in G){const on=I.some(x=>x.seat===s&&x.a<=t&&(t<=x.b||x.open));G[s].classList.toggle("on",on);G[s].classList.toggle("off",!on);
+  G[s].querySelector(".body").setAttribute("filter",on?"url(#glow)":"");
+  let nt="";if(on){for(const n of (D.notes||[]))if(n.seat===s&&n.t<=t)nt=n.text}
+  G[s].querySelector(".prog").textContent=nt.length>46?nt.slice(0,45)+"…":nt}
  const bl=document.getElementById("balls"),tr=document.getElementById("trails");bl.innerHTML="";tr.innerHTML="";
  for(const p of P){const u=(t-p.t)/BALL();
   if(u>=-0.02&&u<=1.6){const [ax,ay]=pos(p.from),[bx,by]=pos(p.to);
@@ -225,12 +231,12 @@ def match_data(root, now=None):
     evs = load(root / ".team" / "events.jsonl")
     if not evs:
         raise SystemExit("no events in .team/events.jsonl")
-    t0, end, intervals, passes, log = derive(evs, now)
+    t0, end, intervals, passes, log, notes = derive(evs, now)
     load_ = load_table(intervals, passes, end)
     span = (f"{t0:%Y-%m-%d %H:%M} – {(t0 + datetime.timedelta(seconds=end)):%H:%M}, {len(intervals)} spells, "
             f"{len(passes)} passes.")
     return {"seats": SEATS, "intervals": intervals, "passes": passes, "log": log, "end": end, "t0": t0.isoformat(),
-            "load": load_, "span": span}
+            "load": load_, "span": span, "notes": notes}
 
 
 def build(campaign, out=None, title=None, now=None):

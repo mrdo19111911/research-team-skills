@@ -14,6 +14,11 @@ opt-in; without it, run the steps by hand with the Agent tool.
    write "independence: context only (same family)" in every bank entry and in `metrics.md`.
 4. Write the baseline plan in `metrics.md`: one agent, same budget, same problem, same tools, same start files.
 
+## 0b. Kickoff (minute 0; tempo.md)
+Spawn every agent listed in `.team/kickoff.md` in ONE message, in parallel, with its `log_event.py start` line, before
+writing the board, the budget or the bulletin. Start `view_match.py <campaign> --live` so the coach watches from the
+first minute. Then, while the wave runs, the head No. 6 writes the phase budget and the lane coordinators open their lanes.
+
 ## 1. One spawn
 Prompt = the full text of `.team/seats/<n>.md` + the board excerpt the seat needs (current phase, its task,
 relevant fragments, tabu log, its requests) + the task in one paragraph with its budget and the file to write.
@@ -25,14 +30,17 @@ relevant fragments, tabu log, its requests) + the task in one paragraph with its
   Agent tool for them anyway, the sealed-verdict rule holds by prompt only: record that on the board.
 - Log the spell: `log_event.py start --seat <n> --agent <id>` before the spawn, `stop` when it returns, and a
   `pass --from <a> --to <b> --what "..."` for each hand-over (match-log.md). The hooks cannot tell Agent-tool spawns apart.
-- One task per spawn. The agent returns a board fragment (templates.md); No. 6 appends it to the board at agent-level.
+- One task per spawn. The agent returns a board fragment (templates.md); its lane coordinator (6a, 6b, 6c) appends it
+  to the board at agent-level.
+- **Dispatcher rule** (tempo.md, rule 2): whenever an agent returns, at once spawn one agent for each new file in
+  `.team/inbox/<seat>/` whose seat has no running agent, the inbox file as its task. Do not read or plan first.
 - Spawn a seat only when there is a task and budget for it. Core seats: 6, 14, 10, 8, 4, 9, 2, 3, 1, 7.
   No. 7 (far field) gets every obstacle No. 6 assigns, from Phase −1 on. Wing 11: only after No. 6 writes "switched on"
   for it in the board's "Seats switched on" table.
 - Independent tasks go out in one message (parallel spawns). Generator squads: 3–5 agents, play alone first (squads.md).
 
 ## 2. Phases (phases.md; No. 6 alone switches phase and writes budget and stop condition on the board first)
-1. **Phase −1 Examples.** Spawn No. 10 (literature seeds) and No. 14 (meaningful examples) in parallel; then No. 14
+1. **Phase −1 Examples.** Starts with the kickoff wave (0b): No. 10 ×2, No. 14 ×2, No. 3 scan, No. 7, No. 4 at once; then No. 14
    computes the worked example with a rerunnable script in `.team/examples/`; No. 10 writes a conjecture matching the
    library and hands it to No. 4; No. 4 hunts counterexamples at the edge of each hypothesis and picks a new case with
    a written prediction; then No. 14 computes it. No. 9 off. Ends when a prediction written before computing is right.

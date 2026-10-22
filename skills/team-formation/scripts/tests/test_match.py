@@ -90,6 +90,14 @@ class MatchTest(unittest.TestCase):
         self.assertEqual((d["intervals"][0]["a"], d["intervals"][0]["b"]), (0, 300))
         self.assertIn("span", d)
 
+    def test_progress_notes_reach_the_page_data(self):
+        cli(self.camp, "start", "--seat", "10", "--agent", "10a", "--time", "2026-10-22T10:00:00")
+        cli(self.camp, "note", "--seat", "10", "--agent", "10a", "--note", "plan: survey DMD", "--time", "2026-10-22T10:00:30")
+        sys.path.insert(0, str(SCRIPTS))
+        import view_match
+        d = view_match.match_data(self.camp)
+        self.assertEqual(d["notes"], [{"seat": "10", "t": 30.0, "text": "plan: survey DMD"}])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -105,6 +105,16 @@ A step that gives a wrong value there is wrong. Passing proves nothing general; 
    final-check label) · time and cost to the first verified result · wrong directions killed early, and at what cost ·
    catch rate of planted false variants (sparring team) · total spend. Team does not beat baseline → shrink the team.
 
+## Tempo (references/tempo.md)
+- **Kickoff at minute 0**: right after setup, spawn every agent in `.team/kickoff.md` in ONE message (two No. 10 on
+  literature, two No. 14 on examples, No. 3 novelty scan, No. 7, No. 4), before writing anything else.
+- **Direct passes**: attack and midfield pass to each other through `.team/inbox/<seat>/`, not through No. 6. Judges
+  (No. 2, No. 1, a judging No. 3) receive only submissions, through the sealed-verdict flow.
+- **Several coordinators**: head No. 6 keeps phase, stop criteria, budget and SEALED; lane coordinators 6a scouting,
+  6b build, 6c verification each own one lane file in `.team/board/`. About one coordinator per five running agents.
+- **Progress at once**: every agent writes its plan within its first minute and one line per partial result
+  (`.team/progress/`, `log_event.py note`); the coach reads them live in `view_match.py --live`.
+
 ## Run loop
 - No. 6 sets the phase (references/phases.md) and writes each phase's budget and stop condition on the board.
 - Before a direction starts, No. 6 writes its stop criteria on the board: budget spent · window expired ·
