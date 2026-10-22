@@ -114,7 +114,15 @@ labels in every report.
 3. **Time box per spell.** Default 10 minutes or 40 tool calls (No. 9: 20 minutes). At the box the agent returns what
    it has, labelled, with one line `NEXT: <the rest of the task>`; the dispatcher starts the NEXT at once as a fresh
    agent. Short spells give news often and keep each agent's context small (law 4: tired → substitute, applied early).
-4. **Shared cache, ready environment.** `.team/cache/` holds what was already fetched or computed: papers with a
+   A `NEXT:` must name the open question it is for; work that has no named open question left is done, not continued.
+4. **When a literature review is done.** A review is never complete (there is always another paper), so it stops on
+   answers, not on coverage. It is done when it has answered three questions: (a) is the idea already known: the five
+   nearest papers, one line each on what they already do; (b) what must a proposal beat: the methods to compare with;
+   (c) what is still open. And it is saturated: the last two search rounds found no new nearest paper or method.
+   At most 3 rounds for the kickoff review; still open after 3 → the lane coordinator decides (GO for more rounds, or
+   stop and record the open question). Afterwards the review runs on demand only: No. 3's quick check when a branch
+   opens, and the full source check before the bank. Nobody waits for the review except a claim of novelty.
+5. **Shared cache, ready environment.** `.team/cache/` holds what was already fetched or computed: papers with a
    five-line summary, example outputs, far-analogy searches; `.team/cache/index.md` lists them, one line each. Every
    agent reads the index before searching or computing and adds what it fetches. `init_team.py` checks the Python
    libraries the variant needs (and pyyaml for far-analogy) and prints the install command, or installs them with
@@ -138,6 +146,8 @@ second agent; two agents producing the same thing means the split was wrong; a s
   sealed-verdict flow. Only No. 1 writes the bank.
 - **Parallel by default.** Independent searches, scripts and reads go out as parallel tool calls in one step.
 - **Time box.** Stop at 10 minutes or 40 tool calls (No. 9: 20 minutes): return what you have, labelled, and one line
-  `NEXT: <the rest>`; a fresh agent continues.
+  `NEXT: <the open question>`; a fresh agent continues. No named open question left → you are done.
+- **Literature review stops on answers**: done when (a) the five nearest papers, (b) the methods to beat and (c) what
+  is open are written, and the last two search rounds found nothing new; at most 3 rounds, then your coordinator decides.
 - **Cache first.** Read `.team/cache/index.md` before searching or computing; add what you fetch or compute, one line.
 - **If a tool refuses or a library is missing, report it in a progress line; do not work around it.**

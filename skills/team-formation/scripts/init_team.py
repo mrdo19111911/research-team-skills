@@ -104,15 +104,18 @@ def brief_text(seat, full):
 # The kickoff wave (references/tempo.md, rule 1): (agent id, seat, task). Spawned in ONE message right after setup.
 KICKOFF = [
     ("10a", 10, "Literature review, classic sources: where does the coach's idea already live (named papers, books),"
-                " what is known, what is open. Write .team/examples/lit-10a.md."),
+                " what is known, what is open. Write .team/examples/lit-10a.md."
+                " Done when the three questions are answered (five nearest papers with what they do; methods to beat; what is open) and the last two search rounds found nothing new; at most 3 rounds."),
     ("10b", 10, "Literature review, the last three years: recent papers on the coach's idea and its nearest"
-                " neighbours; what is open. Write .team/examples/lit-10b.md."),
+                " neighbours; what is open. Write .team/examples/lit-10b.md."
+                " Done when the three questions are answered (five nearest papers with what they do; methods to beat; what is open) and the last two search rounds found nothing new; at most 3 rounds."),
     ("14a", 14, "Smallest meaningful instance of the coach's problem: state it, compute it A to Z with a rerunnable"
                 " script in .team/examples/, label every value."),
     ("14b", 14, "One realistic instance of the coach's problem: state it, the measurable quantity, a simple baseline,"
                 " and compute it with a rerunnable script in .team/examples/."),
     ("3s", 3, "Quick novelty scan (not a verdict): is the coach's claim already known? List the five nearest papers"
-              " with one line each on what they already do. Write .team/examples/novelty-scan.md."),
+              " with one line each on what they already do. Write .team/examples/novelty-scan.md."
+              " Done when the last two search rounds found no nearer paper; at most 3 rounds."),
     ("7a", 7, "Far-analogy cards on the obstacle as the coach stated it: one or two cards, each recorded in the graph"
               " (add_connection.py) and sent to No. 14's inbox for a kill test."),
     ("4a", 4, "Edges of the coach's claim: where it must fail, and the simple baseline any proposal must beat. Write"
@@ -456,7 +459,7 @@ def main(argv=None):
     write(team / "bulletin.md", bulletin_text(problem, today))
     write(team / "kickoff.md", kickoff_text(problem, today))
     write(team / "cache" / "index.md", "# Cache index: one line per item (what, file, who, label). Read before"
-          " searching or computing; add what you fetch (references/tempo.md, rule 6.4)\n")
+          " searching or computing; add what you fetch (references/tempo.md, rule 6.5)\n")
     write(team / "templates" / "templates.md", read("templates.md") + bank_formats(read("coding-team.md")),
           overwrite=a.refresh_seats)
 

@@ -1,5 +1,5 @@
 """Check (and optionally install) the Python libraries a campaign needs, so no agent loses its first minutes on a
-missing import (references/tempo.md, rule 6.4).
+missing import (references/tempo.md, rule 6.5).
 Usage:  python check_env.py --variant math|ml|software|algorithm [--install]
 Exit code 0 when everything imports (after --install, if given), 1 otherwise."""
 import argparse, importlib.util, subprocess, sys
