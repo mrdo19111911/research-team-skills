@@ -106,6 +106,13 @@ A step that gives a wrong value there is wrong. Passing proves nothing general; 
    catch rate of planted false variants (sparring team) · total spend. Team does not beat baseline → shrink the team.
 
 ## Tempo (references/tempo.md)
+- **Parallel by default (mandatory)**: every set of tasks that do not need each other's results goes out in ONE
+  message; a task waits only for a named input, written on the lane file.
+- **Never leave the coach in silence (mandatory)**: report at minute 0, after every return, and at least every
+  3 minutes while agents run (how many run, each one's latest progress line).
+- **Speed per agent**: short context pack (`.team/seats/brief/`), model tier per seat (fast / strong / strongest),
+  time box per spell (10 min or 40 tool calls, then `NEXT:` to a fresh agent), shared cache `.team/cache/`, libraries
+  checked at setup.
 - **Kickoff at minute 0**: right after setup, spawn every agent in `.team/kickoff.md` in ONE message (two No. 10 on
   literature, two No. 14 on examples, No. 3 novelty scan, No. 7, No. 4), before writing anything else.
 - **Direct passes**: attack and midfield pass work to each other through `.team/inbox/<seat>/`, not through No. 6.

@@ -109,6 +109,25 @@ class InitTeam(unittest.TestCase):
         self.assertTrue((self.team / "progress").is_dir())
         self.assertTrue((self.team / "board" / "lane-build.md").exists())
 
+    def test_speed_files(self):
+        out = run(self.camp)
+        self.assertIn("environment:", out)
+        kick = (self.team / "kickoff.md").read_text(encoding="utf-8")
+        self.assertIn('Model tier: fast (Claude Code Agent tool: model "sonnet")', kick)
+        self.assertIn("NEXT:", kick)
+        self.assertIn(".team/seats/brief/10.md", kick)
+        self.assertTrue((self.team / "cache" / "index.md").exists())
+        brief = (self.team / "seats" / "brief" / "9.md").read_text(encoding="utf-8")
+        full = (self.team / "seats" / "9.md").read_text(encoding="utf-8")
+        self.assertIn("## What you do", brief)
+        self.assertNotIn("## Example", brief)
+        self.assertLess(len(brief), len(full))
+
+    def test_check_env(self):
+        sys.path.insert(0, str(INIT.parent))
+        import check_env
+        self.assertEqual(check_env.check("software"), [])  # pyyaml present in the test environment
+
     def test_bad_variant(self):
         r = subprocess.run([sys.executable, str(INIT), str(self.camp), "--variant", "chess", "--problem", "x"],
                            capture_output=True, text=True)

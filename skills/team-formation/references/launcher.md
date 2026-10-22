@@ -14,6 +14,12 @@ opt-in; without it, run the steps by hand with the Agent tool.
    write "independence: context only (same family)" in every bank entry and in `metrics.md`.
 4. Write the baseline plan in `metrics.md`: one agent, same budget, same problem, same tools, same start files.
 
+## 0a. Two mandatory rules (tempo.md, rules 0 and 5)
+- Everything that can run in parallel runs in parallel: one message, many agents; a task waits only for a named input.
+- The coach never waits in silence: report at minute 0, after each return, and every 3 minutes at most while agents run
+  (number running, each one's latest line from `.team/progress/`), and say what runs before ending a turn.
+  With background agents, keep the heartbeat by checking `.team/progress/` between returns.
+
 ## 0b. Kickoff (minute 0; tempo.md)
 Spawn every agent listed in `.team/kickoff.md` in ONE message, in parallel, with its `log_event.py start` line, before
 writing the board, the budget or the bulletin. Start `view_match.py <campaign> --live` so the coach watches from the

@@ -2,7 +2,14 @@
 
 Why: in the pilots the coordinator (No. 6) was the bottleneck. Seats waited while it planned, read every return and
 relayed every hand-over, so agents started late and one at a time. Parallel work pays only if agents start at
-minute 0 and their progress is visible at once. Four rules fix this.
+minute 0 and their progress is visible at once. The rules below fix this; rules 0 and 5 are not optional.
+
+## 0. Parallel by default (mandatory)
+Every set of tasks that do not need each other's results goes out in ONE message, as parallel agents. Running two
+such tasks one after the other is a fault, not a style. A task may wait only for a named input ("needs No. 10's
+conjecture C1"); write that dependency on the lane file. Inside an agent the same holds: independent searches,
+scripts and file reads go out as parallel tool calls in one step. Ask before every spawn: "does this need anything
+that is not done yet?" If not, it goes now, with the others.
 
 ## 1. Kickoff at minute 0
 `init_team.py` writes `.team/kickoff.md`: one ready prompt per kickoff agent. Right after setup, in ONE message, the
@@ -81,7 +88,39 @@ The coach reads progress directly; nobody relays it. The live view (`view_match.
 each glowing seat. A progress line is agent-level: it is not a result until it is a board fragment, and not verified
 until it is in the bank.
 
-## 5. Cost and measurement
+## 5. Never leave the coach waiting in silence (mandatory)
+The coach hates waiting without news. The orchestrator (head No. 6) reports to the coach:
+- **at minute 0**: which agents started, one line each, and the live-view link (`view_match.py --live`);
+- **after every return**: one line: who returned, what came back, its label, what starts next;
+- **at least every 3 minutes while agents run and nothing returned**: a heartbeat: how many agents run, and the
+  latest progress line of each (read from `.team/progress/`);
+- **before ending its own turn while agents still run**: what is running and when the next news is expected.
+A report never says only "waiting" or "working on it": it names the agents and their last line. Numbers keep their
+labels in every report.
+
+## 6. Speed for each agent
+1. **Short context pack.** `init_team.py` writes `.team/seats/brief/<n>.md`: only what the seat does, what it hands
+   over, its prohibitions and the tempo rules. A spawn reads the brief and its task; the full seat file
+   `.team/seats/<n>.md` only when the brief does not settle a question.
+2. **Model tier per seat.** Light work on a fast model, hard judgment on the strongest:
+
+   | Tier | Seats and tasks | Claude Code `model` |
+   |---|---|---|
+   | fast | literature scans (No. 10 kickoff, No. 3 kickoff scan), No. 14 running scripts, No. 11, lane coordinators 6a–6c | `sonnet` (`haiku` for pure look-ups) |
+   | strong | No. 10 conjectures, No. 7, No. 4, No. 8, head No. 6 | `opus` or `sonnet` |
+   | strongest | No. 9 proofs, No. 2, No. 3 judging, No. 1 | `opus` |
+
+   The family rule for judges (laws.md) still applies on top of the tier.
+3. **Time box per spell.** Default 10 minutes or 40 tool calls (No. 9: 20 minutes). At the box the agent returns what
+   it has, labelled, with one line `NEXT: <the rest of the task>`; the dispatcher starts the NEXT at once as a fresh
+   agent. Short spells give news often and keep each agent's context small (law 4: tired → substitute, applied early).
+4. **Shared cache, ready environment.** `.team/cache/` holds what was already fetched or computed: papers with a
+   five-line summary, example outputs, far-analogy searches; `.team/cache/index.md` lists them, one line each. Every
+   agent reads the index before searching or computing and adds what it fetches. `init_team.py` checks the Python
+   libraries the variant needs (and pyyaml for far-analogy) and prints the install command, or installs them with
+   `--install`, so no agent loses its first minutes on a missing library.
+
+## 7. Cost and measurement
 A kickoff wave is 7–8 agents at once, so tokens go fast. Record in `metrics.md`: time to the first progress line, time
 to the first verified result, total spend. After each wave read the workload table: a seat busy all the wave gets a
 second agent; two agents producing the same thing means the split was wrong; a seat that never ran is switched off.
@@ -97,4 +136,8 @@ second agent; two agents producing the same thing means the split was wrong; a s
   would start a costly direction (asks No. 9 to prove or build, opens a new branch), crosses lanes, or stops a direction.
 - **Never pass directly to a judge** (No. 2, No. 1, a judging No. 3): they receive only submissions through the
   sealed-verdict flow. Only No. 1 writes the bank.
+- **Parallel by default.** Independent searches, scripts and reads go out as parallel tool calls in one step.
+- **Time box.** Stop at 10 minutes or 40 tool calls (No. 9: 20 minutes): return what you have, labelled, and one line
+  `NEXT: <the rest>`; a fresh agent continues.
+- **Cache first.** Read `.team/cache/index.md` before searching or computing; add what you fetch or compute, one line.
 - **If a tool refuses or a library is missing, report it in a progress line; do not work around it.**

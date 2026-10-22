@@ -129,7 +129,7 @@ svg{width:100%;height:auto;display:block;border-radius:10px}
 .ctrl{display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap}
 button,select{font:inherit;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
 input[type=range]{flex:1;min-width:160px}
-#live.on{background:#C93A2A;color:#fff;border-color:#C93A2A}#clock{font-variant-numeric:tabular-nums;font-weight:600;min-width:76px}
+#status{font-weight:600;color:var(--ink)}#status.stale{color:#C93A2A}#live.on{background:#C93A2A;color:#fff;border-color:#C93A2A}#clock{font-variant-numeric:tabular-nums;font-weight:600;min-width:76px}
 #log{list-style:none;margin:0;padding:0;max-height:520px;overflow:auto;font-size:13px}
 #log li{padding:3px 0;border-bottom:1px solid var(--line);color:var(--muted)}#log li.on{color:var(--ink);font-weight:600}
 #load{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}#load th,#load td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
@@ -140,6 +140,7 @@ input[type=range]{flex:1;min-width:160px}
 .lbl{font:600 15px system-ui,Arial;fill:#fff}.prog{font:600 14px system-ui,Arial;fill:#fff8c4;paint-order:stroke;stroke:#1c2333;stroke-width:4px}.num{font:700 22px system-ui,Arial;fill:#fff}
 </style></head><body><main>
 <h1>__TITLE__</h1><p class="sub">A seat glows while its agent runs; a ball flies when information passes. <span id="span">__SPAN__</span></p>
+<p id="status" class="sub"></p>
 <div class="wrap"><div>
 <svg id="pitch" viewBox="-30 -140 1110 860" role="img" aria-label="pitch replay">
 <defs><filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9" result="b"/>
@@ -198,6 +199,9 @@ function draw(){
     el("circle",{cx:x,cy:y,r:13,fill:"#fff",stroke:"#111","stroke-width":3},bl);
     el("circle",{cx:x,cy:y,r:4.5,fill:"#111"},bl);
     const tx=el("text",{x:x,y:y-22,"text-anchor":"middle",style:"font:600 16px system-ui;fill:#fff;paint-order:stroke;stroke:#1c2333;stroke-width:4px"},bl);tx.textContent=p.what||""}}}
+ const run=I.filter(x=>x.a<=t&&(t<=x.b||x.open)).length,past=L.filter(e=>e.t<=t),gap=past.length?Math.max(0,Math.round(t-past[past.length-1].t)):0;
+ const stEl=document.getElementById("status");stEl.classList.toggle("stale",run>0&&gap>180);
+ stEl.textContent=`● ${run} agent${run===1?"":"s"} running · last news ${gap<60?gap+" s":Math.round(gap/60)+" min"} ago`+(run>0&&gap>180?" — no news for over 3 minutes":"");
  const d=new Date(t0.getTime()+t*1000);clock.textContent=d.toTimeString().slice(0,8);scrub.value=Math.round(1000*t/END);
  let cur=-1;L.forEach((e,i)=>{if(e.t<=t)cur=i});[...logEl.children].forEach((li,i)=>li.classList.toggle("on",i===cur));
  if(cur>=0&&playing){const li=logEl.children[cur];if(li)li.scrollIntoView({block:"nearest"})}}

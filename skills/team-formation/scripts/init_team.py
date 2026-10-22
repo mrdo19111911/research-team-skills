@@ -81,6 +81,26 @@ def tempo_rules():
     return text[text.index("\n", i) + 1:].strip() if i >= 0 else ""
 
 
+# Model tier per seat (references/tempo.md, rule 6.2) and the Claude Code `model` value for it.
+TIERS = {"fast": "sonnet", "strong": "opus", "strongest": "opus"}
+KICKOFF_TIER = {"10a": "fast", "10b": "fast", "14a": "fast", "14b": "fast", "3s": "fast", "7a": "strong", "4a": "strong"}
+TIME_BOX = "10 minutes or 40 tool calls"
+BRIEF_SECTIONS = ("## What you do", "## What you hand over", "## Done when", "## Never")
+
+
+def brief_text(seat, full):
+    """Short context pack: the sections a spawn needs to act, plus the tempo rules (references/tempo.md, rule 6.1)."""
+    keep, on = [], False
+    for line in full.splitlines():
+        if line.startswith("## "):
+            on = line.strip() in BRIEF_SECTIONS
+        if on:
+            keep.append(line)
+    head = (f"# No. {seat} {NAMES[seat]} — brief (read this first; the full prompt is .team/seats/{seat}.md, open it"
+            " only when this brief does not settle a question)")
+    return "\n".join([head, "", *keep, "", "## Tempo rules (from references/tempo.md)", tempo_rules()]) + "\n"
+
+
 # The kickoff wave (references/tempo.md, rule 1): (agent id, seat, task). Spawned in ONE message right after setup.
 KICKOFF = [
     ("10a", 10, "Literature review, classic sources: where does the coach's idea already live (named papers, books),"
@@ -107,20 +127,27 @@ def kickoff_text(problem, today):
            "Rule (references/tempo.md): no planning first; board details and budget are written while the wave runs.",
            "Default wave budget: one task per agent; stop at the first verified-looking result or when the task is done.",
            "For each agent: `log_event.py start` before the spawn, `stop` when it returns. Also start the coordinators:"
-           " head No. 6 and lane coordinators 6a (scouting), 6b (build), 6c (verification).", ""]
+           " head No. 6 and lane coordinators 6a (scouting), 6b (build), 6c (verification).",
+           "Tell the coach at once which agents started and give the live view: "
+           "`view_match.py <campaign> --live` (references/tempo.md, rule 5).", ""]
     for aid, seat, task in KICKOFF:
+        tier = KICKOFF_TIER.get(aid, "strong")
         out += [f"## Agent {aid} — No. {seat}",
+                f"Model tier: {tier} (Claude Code Agent tool: model \"{TIERS[tier]}\") · time box: {TIME_BOX}",
                 f"Command before spawning: `python \"{log}\" start --seat {seat} --agent {aid}`",
                 "Prompt:", "```",
                 f"You are No. {seat}, agent {aid}, of a research team. TEAM_SEAT={seat}.",
-                f"Read your full system prompt in .team/seats/{seat}.md first, then .team/bulletin.md and your inbox"
-                f" .team/inbox/{seat}/.",
+                f"Read your brief .team/seats/brief/{seat}.md first (the full prompt .team/seats/{seat}.md only if"
+                f" needed), then .team/bulletin.md, your inbox .team/inbox/{seat}/ and .team/cache/index.md.",
                 f"Problem (coach): {problem}",
                 f"Your task: {task}",
                 f"Progress at once: within your first minute write your plan in one line to"
                 f" .team/progress/{seat}-{aid}.md and run `python \"{log}\" note --seat {seat} --agent {aid} --note \"plan: ...\"`;"
                 " then one line after each partial result, with its label.",
                 "Pass directly along the open lanes (inbox file + log_event.py pass); never to a judge.",
+                "Run independent searches, scripts and reads as parallel tool calls. Add what you fetch or compute to"
+                " .team/cache/ with one line in .team/cache/index.md.",
+                f"Time box: {TIME_BOX}. At the box return what you have, labelled, and one line `NEXT: <the rest>`.",
                 "Return a board fragment (template in .team/templates/templates.md).",
                 "```", ""]
     return "\n".join(out) + "\n"
@@ -390,6 +417,7 @@ def main(argv=None):
     ap.add_argument("campaign_dir")
     ap.add_argument("--variant", required=True, choices=VARIANTS)
     ap.add_argument("--problem", required=True)
+    ap.add_argument("--install", action="store_true", help="pip-install the libraries the variant needs, if missing")
     ap.add_argument("--refresh-seats", action="store_true",
                     help="rewrite seats/*.md from the current role cards (board and bank are never rewritten)")
     a = ap.parse_args(argv)
@@ -411,7 +439,8 @@ def main(argv=None):
         p.write_text(text, encoding="utf-8", newline="\n")
 
     mkdir(team)
-    for d in ("verdicts", "handoff", "examples", "seats", "templates", "progress", "board", "inbox"):
+    for d in ("verdicts", "handoff", "examples", "seats", "seats/brief", "templates", "progress", "board", "inbox",
+              "cache"):
         mkdir(team / d)
     for s_ in SEATS:
         mkdir(team / "inbox" / str(s_))
@@ -426,6 +455,8 @@ def main(argv=None):
     write(team / "hooks.settings.json", json.dumps(hooks_json(), indent=2) + "\n")
     write(team / "bulletin.md", bulletin_text(problem, today))
     write(team / "kickoff.md", kickoff_text(problem, today))
+    write(team / "cache" / "index.md", "# Cache index: one line per item (what, file, who, label). Read before"
+          " searching or computing; add what you fetch (references/tempo.md, rule 6.4)\n")
     write(team / "templates" / "templates.md", read("templates.md") + bank_formats(read("coding-team.md")),
           overwrite=a.refresh_seats)
 
@@ -438,6 +469,9 @@ def main(argv=None):
     for s in SEATS:
         write(team / "seats" / f"{s}.md", seat_prompt(s, a.variant, problem, cards, fmt, laws, roles, mlroles),
               overwrite=a.refresh_seats)
+        full = seat_file(s)
+        if full:
+            write(team / "seats" / "brief" / f"{s}.md", brief_text(s, full), overwrite=a.refresh_seats)
 
     for p in created:
         print("created ", p)
@@ -448,6 +482,11 @@ def main(argv=None):
     for s in ("guard_locked.py", "guard_sealed.py", "precompact_handoff.py", "log_event.py"):
         if not (SCRIPTS / s).exists():
             print(f"warning: hook script {s} not found in {SCRIPTS.as_posix()} (referenced anyway)", file=sys.stderr)
+    sys.path.insert(0, str(SCRIPTS))
+    import check_env
+    miss = check_env.check(a.variant, a.install)
+    print("environment:", "ok" if not miss else "MISSING " + " ".join(miss) +
+          f' -> "{sys.executable}" -m pip install ' + " ".join(miss) + " (or rerun with --install)")
     print(f"next: merge {(team / 'hooks.settings.json').as_posix()} into the campaign's .claude/settings.json;"
           f" then spawn every agent in {(team / 'kickoff.md').as_posix()} in ONE message (references/tempo.md)")
     return 0
