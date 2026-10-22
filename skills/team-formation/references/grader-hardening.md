@@ -1,0 +1,13 @@
+# Attacks on the grader and defenses
+- Lean proof uses `sorry` or custom axioms → goalkeeper runs `#print axioms`, bans sorry, builds in a clean environment.
+- Statement subtly weakened → the locked statement must reject known false variants (drop a sign, drop a hypothesis).
+- Labels typed by hand → labels computed from evidence; evidence log append-only.
+- Literature treated as truth → enters at lowest label.
+- Overfitting visible tests → hidden tests rotate; attack never sees them.
+- Team theater → baseline: single agent, same budget, every campaign; if the team loses, shrink.
+- Software: agents delete tests, loosen asserts, mock the thing under test → tests, CI, benchmarks outside implementers' write rights.
+- Defenders defer to each other → sealed verdicts (each in its own unreadable file) before any board or discussion; different model families; sparring team measures catch rate.
+- Independence overclaimed → bank names the kinds achieved per result (model, context, tool); a different prompt on the same model is context independence only.
+- Worked example read as confirmation → it is a filter only: a failure there is a real error, a pass proves nothing general.
+- Lean proves the wrong statement → Lean decides only what was formalized; the statement lock (two independent formalizations, diffed, tested on the example library and false variants) is the weak point.
+- Novelty or a source misread → state the search criteria and the sources checked; "no prior work found" names where it looked.

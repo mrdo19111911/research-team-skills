@@ -1,0 +1,975 @@
+- id: T001
+  name: translation (same world)
+  a: C*-đại số
+  b: C*-algebras
+  status: theorem
+- id: T002
+  name: translation (same world)
+  a: C*-đại số giao hoán có đơn vị
+  b: commutative unital C*-algebras
+  status: theorem
+- id: T003
+  name: translation (same world)
+  a: D-môđun holonomic chính quy
+  b: regular holonomic D-modules
+  status: theorem
+- id: T004
+  name: translation (same world)
+  a: D-môđun trên Bun_G
+  b: D-modules on Bun_G
+  status: theorem
+- id: T005
+  name: translation (same world)
+  a: Pfaffian của ma trận định hướng
+  b: Pfaffians of oriented matrices
+  status: theorem
+- id: T006
+  name: translation (same world)
+  a: biểu diễn Weil–Deligne n chiều
+  b: n-dimensional Weil–Deligne representations
+  status: theorem
+- id: T007
+  name: translation (same world)
+  a: biểu diễn bất khả quy của C*(G)
+  b: irreducible representations of group C*-algebras
+  status: theorem
+- id: T008
+  name: translation (same world)
+  a: biểu diễn bất khả quy của S_n
+  b: irreducible representations of S_n
+  status: theorem
+- id: T009
+  name: translation (same world)
+  a: biểu diễn bất khả quy của nhóm Lie compact
+  b: irreducible representations of compact Lie groups
+  status: theorem
+- id: T010
+  name: translation (same world)
+  a: biểu diễn bất khả quy của nhóm Weyl
+  b: irreducible representations of Weyl groups
+  status: theorem
+- id: T011
+  name: translation (same world)
+  a: biểu diễn của một nhóm trong cặp đối ngẫu
+  b: representations of one member of a dual pair
+  status: theorem
+- id: T012
+  name: translation (same world)
+  a: biểu diễn của nhóm cơ bản
+  b: representations of the fundamental group
+  status: theorem
+- id: T013
+  name: translation (same world)
+  a: biểu diễn của nhóm kia
+  b: representations of the other member
+  status: theorem
+- id: T014
+  name: translation (same world)
+  a: biểu diễn của nhóm đối ngẫu Langlands
+  b: representations of Langlands dual groups
+  status: theorem
+- id: T015
+  name: translation (same world)
+  a: biểu diễn quiver trên trường hữu hạn
+  b: quiver representations over finite fields
+  status: theorem
+- id: T016
+  name: translation (same world)
+  a: biểu diễn trơn bất khả quy của GL_n trên trường địa phương
+  b: smooth irreducible representations of GL_n over local fields
+  status: theorem
+- id: T017
+  name: translation (same world)
+  a: biểu diễn tự đẳng cấu của G
+  b: automorphic representations of G
+  status: theorem
+- id: T018
+  name: translation (same world)
+  a: biểu diễn tự đẳng cấu của H
+  b: automorphic representations of H
+  status: theorem
+- id: T019
+  name: translation (same world)
+  a: biểu diễn unita bất khả quy của nhóm compact địa phương
+  b: unitary irreducible representations of locally compact groups
+  status: theorem
+- id: T020
+  name: translation (same world)
+  a: biểu diễn unita bất khả quy của nhóm cơ bản
+  b: irreducible unitary representations of the fundamental group
+  status: theorem
+- id: T021
+  name: translation (same world)
+  a: biểu diễn đa thức bất khả quy của GL(V) bậc n
+  b: irreducible polynomial representations of GL(V) of degree n
+  status: theorem
+- id: T022
+  name: translation (same world)
+  a: biểu đồ Dynkin
+  b: Dynkin diagrams
+  status: theorem
+- id: T023
+  name: translation (same world)
+  a: biểu đồ Dynkin ADE
+  b: ADE Dynkin diagrams
+  status: theorem
+- id: T024
+  name: translation (same world)
+  a: bài toán gốc
+  b: primal linear programs
+  status: theorem
+- id: T025
+  name: translation (same world)
+  a: bài toán đối ngẫu
+  b: dual linear programs
+  status: theorem
+- id: T026
+  name: translation (same world)
+  a: bó l-adic trên đa tạp trên trường hữu hạn
+  b: l-adic sheaves on varieties over finite fields
+  status: theorem
+- id: T027
+  name: translation (same world)
+  a: bó nhất quán trên đa tạp xạ ảnh
+  b: coherent sheaves on projective varieties
+  status: theorem
+- id: T028
+  name: translation (same world)
+  a: bó perverse
+  b: perverse sheaves
+  status: theorem
+- id: T029
+  name: translation (same world)
+  a: bó perverse trên Grassmannian affine
+  b: perverse sheaves on the affine Grassmannian
+  status: theorem
+- id: T030
+  name: translation (same world)
+  a: bó perverse trên đa tạp cờ
+  b: perverse sheaves on flag varieties
+  status: theorem
+- id: T031
+  name: translation (same world)
+  a: bó tựa nhất quán trên LocSys của nhóm đối ngẫu
+  b: ind-coherent sheaves on LocSys of the dual group
+  status: theorem
+- id: T032
+  name: translation (same world)
+  a: bước ngẫu nhiên trên đồ thị
+  b: random walks on graphs
+  status: theorem
+- id: T033
+  name: translation (same world)
+  a: bất biến Gromov–Witten của quintic
+  b: Gromov–Witten invariants of the quintic
+  status: theorem
+- id: T034
+  name: translation (same world)
+  a: bộ ba phổ giao hoán
+  b: commutative spectral triples
+  status: theorem
+- id: T035
+  name: translation (same world)
+  a: chuyển động Brown
+  b: Brownian motion
+  status: theorem
+- id: T036
+  name: translation (same world)
+  a: chương trình
+  b: programs
+  status: theorem
+- id: T037
+  name: translation (same world)
+  a: chỉ số giải tích của toán tử elliptic
+  b: analytic index of elliptic operators
+  status: theorem
+- id: T038
+  name: translation (same world)
+  a: chỉ số tôpô
+  b: topological index
+  status: theorem
+- id: T039
+  name: translation (same world)
+  a: chứng minh
+  b: proofs
+  status: theorem
+- id: T040
+  name: translation (same world)
+  a: cặp (quỹ đạo lũy linh, hệ địa phương)
+  b: pairs of nilpotent orbit and local system
+  status: theorem
+- id: T041
+  name: translation (same world)
+  a: cặp bảng Young chuẩn cùng hình dạng
+  b: pairs of standard Young tableaux of the same shape
+  status: theorem
+- id: T042
+  name: translation (same world)
+  a: dạng modular
+  b: modular forms
+  status: theorem
+- id: T043
+  name: translation (same world)
+  a: dạng mới trọng số 2
+  b: weight 2 newforms
+  status: theorem
+- id: T044
+  name: translation (same world)
+  a: dạng điều hoà
+  b: harmonic forms
+  status: theorem
+- id: T045
+  name: translation (same world)
+  a: dạng độ cong
+  b: curvature forms
+  status: theorem
+- id: T046
+  name: translation (same world)
+  a: ghép cặp cực đại trên đồ thị hai phía
+  b: maximum matchings in bipartite graphs
+  status: theorem
+- id: T047
+  name: translation (same world)
+  a: ghép cặp hoàn hảo trên đồ thị phẳng
+  b: perfect matchings of planar graphs
+  status: theorem
+- id: T048
+  name: translation (same world)
+  a: giá (nhân tử)
+  b: prices (multipliers)
+  status: theorem
+- id: T049
+  name: translation (same world)
+  a: hoán vị
+  b: permutations
+  status: theorem
+- id: T050
+  name: translation (same world)
+  a: hàm liên hợp lồi
+  b: convex conjugate functions
+  status: theorem
+- id: T051
+  name: translation (same world)
+  a: hàm lồi
+  b: convex functions
+  status: theorem
+- id: T052
+  name: translation (same world)
+  a: hàm lồi (mở rộng Lovász)
+  b: convex functions
+  status: theorem
+- id: T053
+  name: translation (same world)
+  a: hàm trên các điểm hữu tỉ
+  b: functions on rational points
+  status: theorem
+- id: T054
+  name: translation (same world)
+  a: hàm trên không gian pha
+  b: functions on phase space
+  status: theorem
+- id: T055
+  name: translation (same world)
+  a: hàm tập modular con
+  b: submodular set functions
+  status: theorem
+- id: T056
+  name: translation (same world)
+  a: hàm tốc độ (liên hợp lồi)
+  b: rate functions (convex conjugates)
+  status: theorem
+- id: T057
+  name: translation (same world)
+  a: hàm zeta của đa tạp trên trường hữu hạn
+  b: zeta functions of varieties over finite fields
+  status: theorem
+- id: T058
+  name: translation (same world)
+  a: hàm điều hoà
+  b: harmonic functions
+  status: theorem
+- id: T059
+  name: translation (same world)
+  a: hấp dẫn lượng tử trong AdS
+  b: quantum gravity in AdS
+  status: theorem
+- id: T060
+  name: translation (same world)
+  a: hệ địa phương
+  b: local systems
+  status: theorem
+- id: T061
+  name: translation (same world)
+  a: iđêan căn
+  b: radical ideals
+  status: theorem
+- id: T062
+  name: translation (same world)
+  a: iđêan nguyên thuỷ
+  b: primitive ideals
+  status: theorem
+- id: T063
+  name: translation (same world)
+  a: không gian (∞-groupoid)
+  b: spaces (infinity-groupoids)
+  status: theorem
+- id: T064
+  name: translation (same world)
+  a: không gian Hausdorff compact
+  b: compact Hausdorff spaces
+  status: theorem
+- id: T065
+  name: translation (same world)
+  a: không gian Hilbert lượng tử
+  b: quantum Hilbert spaces
+  status: theorem
+- id: T066
+  name: translation (same world)
+  a: không gian Stone
+  b: Stone spaces
+  status: theorem
+- id: T067
+  name: translation (same world)
+  a: không gian phủ
+  b: covering spaces
+  status: theorem
+- id: T068
+  name: translation (same world)
+  a: không điểm hàm zeta
+  b: zeros of the zeta function
+  status: theorem
+- id: T069
+  name: translation (same world)
+  a: kiểu
+  b: types
+  status: theorem
+- id: T070
+  name: translation (same world)
+  a: kế hoạch vận tải tối ưu
+  b: optimal transport plans
+  status: theorem
+- id: T071
+  name: translation (same world)
+  a: kỳ vọng trên quỹ đạo Brown
+  b: expectations over Brownian paths
+  status: theorem
+- id: T072
+  name: translation (same world)
+  a: logic bậc hai tồn tại
+  b: existential second-order logic
+  status: theorem
+- id: T073
+  name: translation (same world)
+  a: logic bậc hai đơn nguyên trên xâu
+  b: monadic second-order logic on strings
+  status: theorem
+- id: T074
+  name: translation (same world)
+  a: logic mệnh đề cổ điển
+  b: classical propositional logic
+  status: theorem
+- id: T075
+  name: translation (same world)
+  a: logic trực giác bậc cao
+  b: higher-order intuitionistic logic
+  status: theorem
+- id: T076
+  name: translation (same world)
+  a: luồng cực đại
+  b: maximum flows
+  status: theorem
+- id: T077
+  name: translation (same world)
+  a: lát cắt chỉnh hình của phân thớ đường trên đa tạp cờ
+  b: holomorphic sections of line bundles on flag varieties
+  status: theorem
+- id: T078
+  name: translation (same world)
+  a: lát cắt của phân thớ đường trên đường cong modular
+  b: sections of line bundles on modular curves
+  status: theorem
+- id: T079
+  name: translation (same world)
+  a: lát cắt cực tiểu
+  b: minimum cuts
+  status: theorem
+- id: T080
+  name: translation (same world)
+  a: lý thuyết trường bảo giác trên biên
+  b: boundary conformal field theory
+  status: theorem
+- id: T081
+  name: translation (same world)
+  a: lũy thừa ma trận min-plus
+  b: min-plus matrix powers
+  status: theorem
+- id: T082
+  name: translation (same world)
+  a: lược đồ affine
+  b: affine schemes
+  status: theorem
+- id: T083
+  name: translation (same world)
+  a: lớp NP
+  b: NP
+  status: theorem
+- id: T084
+  name: translation (same world)
+  a: lớp đặc trưng
+  b: characteristic classes
+  status: theorem
+- id: T085
+  name: translation (same world)
+  a: matroid
+  b: matroids
+  status: theorem
+- id: T086
+  name: translation (same world)
+  a: metric Hermite–Einstein
+  b: Hermitian–Einstein metrics
+  status: theorem
+- id: T087
+  name: translation (same world)
+  a: mô hình lưới tới hạn
+  b: critical lattice models
+  status: theorem
+- id: T088
+  name: translation (same world)
+  a: môđun Dieudonné
+  b: Dieudonné modules
+  status: theorem
+- id: T089
+  name: translation (same world)
+  a: môđun phân bậc (modulo môđun độ dài hữu hạn)
+  b: graded modules modulo finite length
+  status: theorem
+- id: T090
+  name: translation (same world)
+  a: môđun xạ ảnh hữu hạn sinh trên đại số hàm
+  b: finitely generated projective modules over function algebras
+  status: theorem
+- id: T091
+  name: translation (same world)
+  a: mạng trong C (modulo đồng dạng)
+  b: lattices in C up to homothety
+  status: theorem
+- id: T092
+  name: translation (same world)
+  a: mạng điện trở
+  b: resistor networks
+  status: theorem
+- id: T093
+  name: translation (same world)
+  a: mặt Riemann đơn liên
+  b: simply connected Riemann surfaces
+  status: theorem
+- id: T094
+  name: translation (same world)
+  a: mặt cầu, mặt phẳng, đĩa
+  b: sphere plane and disc
+  status: theorem
+- id: T095
+  name: translation (same world)
+  a: mở rộng abel của trường số
+  b: abelian extensions of number fields
+  status: theorem
+- id: T096
+  name: translation (same world)
+  a: ngôn ngữ chính quy
+  b: regular languages
+  status: theorem
+- id: T097
+  name: translation (same world)
+  a: nhóm Lie đơn liên
+  b: simply connected Lie groups
+  status: theorem
+- id: T098
+  name: translation (same world)
+  a: nhóm abel compact địa phương
+  b: locally compact abelian groups
+  status: theorem
+- id: T099
+  name: translation (same world)
+  a: nhóm compact
+  b: compact groups
+  status: theorem
+- id: T100
+  name: translation (same world)
+  a: nhóm con của nhóm Galois
+  b: subgroups of the Galois group
+  status: theorem
+- id: T101
+  name: translation (same world)
+  a: nhóm con của nhóm cơ bản
+  b: subgroups of the fundamental group
+  status: theorem
+- id: T102
+  name: translation (same world)
+  a: nhóm con hữu hạn của SU(2)
+  b: finite subgroups of SU(2)
+  status: theorem
+- id: T103
+  name: translation (same world)
+  a: nhóm con mở chỉ số hữu hạn của nhóm lớp idele
+  b: open finite-index subgroups of the idele class group
+  status: theorem
+- id: T104
+  name: translation (same world)
+  a: nhóm lượng tử
+  b: quantum groups
+  status: theorem
+- id: T105
+  name: translation (same world)
+  a: nhóm p-chia được
+  b: p-divisible groups
+  status: theorem
+- id: T106
+  name: translation (same world)
+  a: nhóm đối ngẫu Pontryagin
+  b: Pontryagin dual groups
+  status: theorem
+- id: T107
+  name: translation (same world)
+  a: nút trong không gian 3 chiều
+  b: knots in 3-space
+  status: theorem
+- id: T108
+  name: translation (same world)
+  a: nửa vành nhiệt đới (max, +)
+  b: tropical semiring (max, +)
+  status: theorem
+- id: T109
+  name: translation (same world)
+  a: nửa vành số thực (+, ×)
+  b: real semiring (+, ×)
+  status: theorem
+- id: T110
+  name: translation (same world)
+  a: phân thớ Higgs
+  b: Higgs bundles
+  status: theorem
+- id: T111
+  name: translation (same world)
+  a: phân thớ chỉnh hình ổn định
+  b: stable holomorphic bundles
+  status: theorem
+- id: T112
+  name: translation (same world)
+  a: phân thớ phẳng
+  b: flat bundles
+  status: theorem
+- id: T113
+  name: translation (same world)
+  a: phân thớ vector trên không gian compact
+  b: vector bundles on compact spaces
+  status: theorem
+- id: T114
+  name: translation (same world)
+  a: phân thớ vector ổn định bậc 0 trên đường cong
+  b: stable degree 0 vector bundles on curves
+  status: theorem
+- id: T115
+  name: translation (same world)
+  a: phân thớ xuyến Lagrange
+  b: special Lagrangian torus fibrations
+  status: theorem
+- id: T116
+  name: translation (same world)
+  a: phân thớ xuyến đối ngẫu
+  b: dual torus fibrations
+  status: theorem
+- id: T117
+  name: translation (same world)
+  a: phân tích tế bào, đồng điều
+  b: cell decompositions and homology
+  status: theorem
+- id: T118
+  name: translation (same world)
+  a: phương trình đạo hàm riêng parabolic
+  b: parabolic PDE
+  status: theorem
+- id: T119
+  name: translation (same world)
+  a: phạm trù 2 Khovanov–Lauda–Rouquier
+  b: Khovanov–Lauda–Rouquier 2-categories
+  status: theorem
+- id: T120
+  name: translation (same world)
+  a: phạm trù Fukaya
+  b: Fukaya categories
+  status: theorem
+- id: T121
+  name: translation (same world)
+  a: phạm trù biểu diễn
+  b: representation categories
+  status: theorem
+- id: T122
+  name: translation (same world)
+  a: phạm trù biểu diễn có hàm tử thớ
+  b: representation categories with fiber functor
+  status: theorem
+- id: T123
+  name: translation (same world)
+  a: phạm trù dẫn xuất bó nhất quán của đa tạp gương
+  b: derived categories of coherent sheaves on mirror
+  status: theorem
+- id: T124
+  name: translation (same world)
+  a: phạm trù dẫn xuất của đa tạp abel
+  b: derived categories of abelian varieties
+  status: theorem
+- id: T125
+  name: translation (same world)
+  a: phạm trù dẫn xuất của đa tạp abel đối ngẫu
+  b: derived categories of dual abelian varieties
+  status: theorem
+- id: T126
+  name: translation (same world)
+  a: phạm trù đóng Descartes
+  b: cartesian closed categories
+  status: theorem
+- id: T127
+  name: translation (same world)
+  a: phần dương của nhóm lượng tử
+  b: positive part of quantum groups
+  status: theorem
+- id: T128
+  name: translation (same world)
+  a: phổ của Laplacian
+  b: spectrum of the Laplacian
+  status: theorem
+- id: T129
+  name: translation (same world)
+  a: phủ étale hữu hạn
+  b: finite étale covers
+  status: theorem
+- id: T130
+  name: translation (same world)
+  a: phủ đỉnh cực tiểu
+  b: minimum vertex covers
+  status: theorem
+- id: T131
+  name: translation (same world)
+  a: quiver loại hữu hạn
+  b: quivers of finite type
+  status: theorem
+- id: T132
+  name: translation (same world)
+  a: quạt (đa diện)
+  b: fans
+  status: theorem
+- id: T133
+  name: translation (same world)
+  a: quỹ đạo đối phụ hợp
+  b: coadjoint orbits
+  status: theorem
+- id: T134
+  name: translation (same world)
+  a: ràng buộc cứng
+  b: hard constraints
+  status: theorem
+- id: T135
+  name: translation (same world)
+  a: số nguyên (đặc trưng Euler)
+  b: integers (Euler characteristic)
+  status: theorem
+- id: T136
+  name: translation (same world)
+  a: số nguyên tố
+  b: prime numbers
+  status: theorem
+- id: T137
+  name: translation (same world)
+  a: thế đối ngẫu (gradient hàm lồi)
+  b: dual potentials (gradients of convex functions)
+  status: theorem
+- id: T138
+  name: translation (same world)
+  a: thể tích và số chiều
+  b: volume and dimension
+  status: theorem
+- id: T139
+  name: translation (same world)
+  a: topos
+  b: toposes
+  status: theorem
+- id: T140
+  name: translation (same world)
+  a: toán tử giả vi phân
+  b: pseudodifferential operators
+  status: theorem
+- id: T141
+  name: translation (same world)
+  a: trường hàm bậc siêu việt 1
+  b: function fields of transcendence degree 1
+  status: theorem
+- id: T142
+  name: translation (same world)
+  a: trường hàm trên trường hữu hạn
+  b: function fields over finite fields
+  status: theorem
+- id: T143
+  name: translation (same world)
+  a: trường số
+  b: number fields
+  status: theorem
+- id: T144
+  name: translation (same world)
+  a: trường trung gian
+  b: intermediate fields
+  status: theorem
+- id: T145
+  name: translation (same world)
+  a: trị riêng ma trận ngẫu nhiên GUE
+  b: GUE random matrix eigenvalues
+  status: theorem
+- id: T146
+  name: translation (same world)
+  a: tích phân chu kỳ của đa tạp gương
+  b: period integrals of the mirror
+  status: theorem
+- id: T147
+  name: translation (same world)
+  a: tích sao
+  b: star products
+  status: theorem
+- id: T148
+  name: translation (same world)
+  a: tập hữu hạn có tác động liên tục của nhóm cơ bản étale
+  b: finite sets with continuous étale fundamental group action
+  status: theorem
+- id: T149
+  name: translation (same world)
+  a: tổ hợp tam giác hoá và dấu
+  b: triangulations with signs
+  status: theorem
+- id: T150
+  name: translation (same world)
+  a: vành Chow tổ hợp thoả lý thuyết Hodge
+  b: combinatorial Chow rings satisfying Hodge theory
+  status: theorem
+- id: T151
+  name: translation (same world)
+  a: vành biểu diễn (đặc trưng)
+  b: representation rings (characters)
+  status: theorem
+- id: T152
+  name: translation (same world)
+  a: vành biểu diễn của nhóm đối ngẫu Langlands
+  b: representation rings of Langlands dual groups
+  status: theorem
+- id: T153
+  name: translation (same world)
+  a: vành giao hoán
+  b: commutative rings
+  status: theorem
+- id: T154
+  name: translation (same world)
+  a: vành hàm Schur (thương)
+  b: quotients of the ring of Schur functions
+  status: theorem
+- id: T155
+  name: translation (same world)
+  a: xuyến phức có phân cực
+  b: polarized complex tori
+  status: theorem
+- id: T156
+  name: translation (same world)
+  a: xác suất sự kiện hiếm
+  b: rare event probabilities
+  status: theorem
+- id: T157
+  name: translation (same world)
+  a: đa diện Delzant
+  b: Delzant polytopes
+  status: theorem
+- id: T158
+  name: translation (same world)
+  a: đa thức Alexander
+  b: Alexander polynomial
+  status: theorem
+- id: T159
+  name: translation (same world)
+  a: đa thức Ehrhart của đa diện nguyên
+  b: Ehrhart polynomials of lattice polytopes
+  status: theorem
+- id: T160
+  name: translation (same world)
+  a: đa thức Jones
+  b: Jones polynomial
+  status: theorem
+- id: T161
+  name: translation (same world)
+  a: đa thức Kazhdan–Lusztig
+  b: Kazhdan–Lusztig polynomials
+  status: theorem
+- id: T162
+  name: translation (same world)
+  a: đa tạp Poisson
+  b: Poisson manifolds
+  status: theorem
+- id: T163
+  name: translation (same world)
+  a: đa tạp Riemann spin compact
+  b: compact Riemannian spin manifolds
+  status: theorem
+- id: T164
+  name: translation (same world)
+  a: đa tạp abel phức
+  b: complex abelian varieties
+  status: theorem
+- id: T165
+  name: translation (same world)
+  a: đa tạp affine
+  b: affine varieties
+  status: theorem
+- id: T166
+  name: translation (same world)
+  a: đa tạp con của xuyến đại số phức
+  b: subvarieties of complex algebraic tori
+  status: theorem
+- id: T167
+  name: translation (same world)
+  a: đa tạp nhiệt đới
+  b: tropical varieties
+  status: theorem
+- id: T168
+  name: translation (same world)
+  a: đa tạp symplectic
+  b: symplectic manifolds
+  status: theorem
+- id: T169
+  name: translation (same world)
+  a: đa tạp symplectic toric compact
+  b: compact symplectic toric manifolds
+  status: theorem
+- id: T170
+  name: translation (same world)
+  a: đa tạp toric
+  b: toric varieties
+  status: theorem
+- id: T171
+  name: translation (same world)
+  a: đa tạp trên trường có định giá
+  b: varieties over valued fields
+  status: theorem
+- id: T172
+  name: translation (same world)
+  a: điểm tới hạn của hàm Morse
+  b: critical points of Morse functions
+  status: theorem
+- id: T173
+  name: translation (same world)
+  a: đường cong elliptic phức
+  b: complex elliptic curves
+  status: theorem
+- id: T174
+  name: translation (same world)
+  a: đường cong elliptic trên Q
+  b: elliptic curves over Q
+  status: theorem
+- id: T175
+  name: translation (same world)
+  a: đường cong nhiệt đới
+  b: tropical curves
+  status: theorem
+- id: T176
+  name: translation (same world)
+  a: đường cong xạ ảnh trơn
+  b: smooth projective curves
+  status: theorem
+- id: T177
+  name: translation (same world)
+  a: đường cong đại số phức trên mặt toric
+  b: complex algebraic curves on toric surfaces
+  status: theorem
+- id: T178
+  name: translation (same world)
+  a: đường cong đại số thực
+  b: real algebraic curves
+  status: theorem
+- id: T179
+  name: translation (same world)
+  a: đường đi ngắn nhất
+  b: shortest paths
+  status: theorem
+- id: T180
+  name: translation (same world)
+  a: đại số Boole
+  b: Boolean algebras
+  status: theorem
+- id: T181
+  name: translation (same world)
+  a: đại số Hecke cầu
+  b: spherical Hecke algebras
+  status: theorem
+- id: T182
+  name: translation (same world)
+  a: đại số Lie
+  b: Lie algebras
+  status: theorem
+- id: T183
+  name: translation (same world)
+  a: đại số Lie đơn phức
+  b: complex simple Lie algebras
+  status: theorem
+- id: T184
+  name: translation (same world)
+  a: đại số cụm loại hữu hạn
+  b: cluster algebras of finite type
+  status: theorem
+- id: T185
+  name: translation (same world)
+  a: đại số toán tử trên không gian Hilbert
+  b: operator algebras on Hilbert space
+  status: theorem
+- id: T186
+  name: translation (same world)
+  a: đặc trưng Euler của phân thớ đường trên đa tạp toric
+  b: Euler characteristics of line bundles on toric varieties
+  status: theorem
+- id: T187
+  name: translation (same world)
+  a: đối đồng điều
+  b: cohomology
+  status: theorem
+- id: T188
+  name: translation (same world)
+  a: đối đồng điều của Grassmannian
+  b: cohomology of Grassmannians
+  status: theorem
+- id: T189
+  name: translation (same world)
+  a: đối đồng điều de Rham
+  b: de Rham cohomology
+  status: theorem
+- id: T190
+  name: translation (same world)
+  a: đối đồng điều kỳ dị hệ số thực
+  b: real singular cohomology
+  status: theorem
+- id: T191
+  name: translation (same world)
+  a: đối đồng điều l-adic
+  b: l-adic cohomology
+  status: theorem
+- id: T192
+  name: translation (same world)
+  a: đồng điều Floer Seiberg–Witten
+  b: Seiberg–Witten Floer homology
+  status: theorem
+- id: T193
+  name: translation (same world)
+  a: đồng điều Floer nút
+  b: knot Floer homology
+  status: theorem
+- id: T194
+  name: translation (same world)
+  a: đồng điều Heegaard Floer
+  b: Heegaard Floer homology
+  status: theorem
+- id: T195
+  name: translation (same world)
+  a: đồng điều Khovanov
+  b: Khovanov homology
+  status: theorem

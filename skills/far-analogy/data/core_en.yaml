@@ -1,0 +1,453 @@
+# Core correspondence dictionary (English). status: theorem | conditional | heuristic | conjecture
+# source_checked: "no" everywhere = written from memory by Claude, not yet verified against the source.
+# Node names must match exactly across edges for path finding.
+
+# ---------- A. Space–algebra duality
+- {id: A01, name: Gelfand duality, a: compact Hausdorff spaces, b: commutative unital C*-algebras, status: theorem,
+   map: [[point, character / maximal ideal], [continuous function, element], [continuous map, "*-homomorphism (reversed)"]],
+   breaks: "Non-compact spaces need non-unital algebras or compactifications; noncommutative algebras have no point set.",
+   motif: space-algebra duality, source: "Gelfand–Naimark 1943; Murphy, C*-Algebras and Operator Theory, Thm 2.1.10", source_checked: no}
+- {id: A02, name: Gelfand–Naimark representation, a: C*-algebras, b: operator algebras on Hilbert space, status: theorem,
+   map: [[abstract C*-algebra, norm-closed *-subalgebra of B(H)]],
+   breaks: "Fails for Banach *-algebras without the C*-identity.",
+   motif: space-algebra duality, source: "Gelfand–Naimark 1943; Murphy Thm 3.4.1", source_checked: no}
+- {id: A03, name: affine schemes and rings, a: affine schemes, b: commutative rings, status: theorem,
+   map: [[Spec R, R], [point, prime ideal], [basic open D(f), localization R_f]],
+   breaks: "Non-affine schemes are not determined by global sections.",
+   motif: space-algebra duality, source: "Hartshorne, Algebraic Geometry, II.2.3", source_checked: no}
+- {id: A04, name: Hilbert Nullstellensatz, a: affine varieties, b: radical ideals, status: conditional, hyp: "algebraically closed field",
+   map: [[zero set, radical ideal], [point, maximal ideal]],
+   breaks: "Over non-closed fields (e.g. R) x^2+1 has no zeros but is not the unit ideal.",
+   motif: space-algebra duality, source: "Atiyah–Macdonald, Cor 5.24 / Ex 7.14", source_checked: no}
+- {id: A05, name: Serre–Swan, a: vector bundles on compact spaces, b: finitely generated projective modules over function algebras, status: conditional,
+   hyp: "X compact Hausdorff (algebraic version: affine varieties)",
+   map: [[bundle, module of sections], [Whitney sum, direct sum]],
+   breaks: "Non-compact X: projective modules need not be finitely generated.",
+   motif: space-algebra duality, source: "Swan, Trans. AMS 105 (1962)", source_checked: no}
+- {id: A06, name: Stone duality, a: Boolean algebras, b: Stone spaces, status: theorem,
+   map: [[ultrafilter, point], [element, clopen set]],
+   breaks: "Distributive lattices need spectral spaces (Priestley), not Stone spaces.",
+   motif: space-algebra duality, source: "Stone 1936; Johnstone, Stone Spaces", source_checked: no}
+- {id: A07, name: Pontryagin duality, a: locally compact abelian groups, b: Pontryagin dual groups, status: theorem,
+   map: [[compact group, discrete group], [Fourier transform, inverse transform], [subgroup, quotient of dual]],
+   breaks: "Non-abelian groups: dual is not a group (see Tannaka–Krein).",
+   motif: Fourier duality, source: "Rudin, Fourier Analysis on Groups, 1.7", source_checked: no}
+- {id: A08, name: Tannaka–Krein, a: compact groups, b: representation categories with fiber functor, status: theorem,
+   map: [[group, rigid tensor category], [group element, tensor automorphism of fiber functor]],
+   breaks: "Without the fiber functor the category alone does not determine the group.",
+   motif: space-algebra duality, source: "Joyal–Street, Springer LNM 1488 (1991)", source_checked: no}
+- {id: A09, name: group and group C*-algebra, a: unitary irreducible representations of locally compact groups, b: irreducible representations of group C*-algebras, status: theorem,
+   map: [[representation of G, representation of C*(G)]],
+   breaks: "Reduced C*-algebra sees only weakly contained reps unless G is amenable.",
+   motif: space-algebra duality, source: "Dixmier, C*-Algebras, 13.9", source_checked: no}
+- {id: A10, name: spectrum and primitive ideals, a: irreducible representations of group C*-algebras, b: primitive ideals, status: conditional,
+   hyp: "bijective for type I algebras; in general only surjective",
+   map: [[equivalence class of irrep, its kernel]],
+   breaks: "Non-type-I algebras: many inequivalent irreps share a kernel.",
+   motif: space-algebra duality, source: "Dixmier, C*-Algebras, 3.1 and 9.1", source_checked: no}
+- {id: A11, name: Serre on Proj, a: coherent sheaves on projective varieties, b: graded modules modulo finite length, status: theorem,
+   map: [[sheaf, graded module], [twist O(n), degree shift]],
+   breaks: "Finite-length modules are invisible as sheaves.",
+   motif: space-algebra duality, source: "Serre, FAC (1955); Hartshorne II.5.15", source_checked: no}
+- {id: A12, name: Connes reconstruction, a: compact Riemannian spin manifolds, b: commutative spectral triples, status: conditional,
+   hyp: "Connes' axioms for the commutative case",
+   map: [[metric, Dirac operator], [distance, Connes distance formula]],
+   breaks: "Noncommutative spectral triples have no underlying manifold.",
+   motif: space-algebra duality, source: "Connes, J. Noncommut. Geom. 7 (2013)", source_checked: no}
+
+# ---------- B. Galois correspondences
+- {id: B01, name: fundamental theorem of Galois theory, a: intermediate fields, b: subgroups of the Galois group, status: conditional, hyp: "finite Galois extension",
+   map: [[larger field, smaller subgroup], [normal extension, normal subgroup]],
+   breaks: "Infinite extensions need the Krull topology (closed subgroups only).",
+   motif: Galois correspondence, source: "Lang, Algebra, VI.1.1", source_checked: no}
+- {id: B02, name: coverings and fundamental group, a: covering spaces, b: subgroups of the fundamental group, status: conditional,
+   hyp: "connected, locally path-connected, semilocally simply connected",
+   map: [[covering, subgroup], [regular covering, normal subgroup], [universal cover, trivial subgroup]],
+   breaks: "Hawaiian earring: no universal cover.",
+   motif: Galois correspondence, source: "Hatcher, Algebraic Topology, Thm 1.38", source_checked: no}
+- {id: B03, name: Grothendieck Galois theory, a: finite étale covers, b: finite sets with continuous étale fundamental group action, status: theorem,
+   map: [[étale cover, finite set with action], [field extension, cover of Spec]],
+   breaks: "Ramified covers are not étale; need tame or log versions.",
+   motif: Galois correspondence, source: "SGA 1, Exp. V", source_checked: no}
+- {id: B04, name: curves and function fields, a: smooth projective curves, b: function fields of transcendence degree 1, status: theorem,
+   map: [[point, discrete valuation], [non-constant map, field embedding (reversed)]],
+   breaks: "Higher dimension: birational models are not unique.",
+   motif: space-algebra duality, source: "Hartshorne I.6.12", source_checked: no}
+- {id: B05, name: Weil Rosetta stone, a: number fields, b: function fields over finite fields, status: heuristic,
+   map: [[integers, polynomials over F_q], [prime, point of a curve], [Riemann hypothesis (open), RH for curves (proved)]],
+   breaks: "No 'field with one element' base: Spec Z has no absolute product Spec Z × Spec Z.",
+   motif: arithmetic-geometric analogy, source: "Weil, letter to Simone Weil (1940)", source_checked: no}
+- {id: B06, name: arithmetic topology, a: prime numbers, b: knots in 3-space, status: heuristic,
+   map: [[Spec Z, 3-sphere], [prime, knot], [Legendre symbol, linking number]],
+   breaks: "Linking is symmetric; quadratic reciprocity has sign corrections.",
+   motif: arithmetic-geometric analogy, source: "Morishita, Knots and Primes (Springer 2012)", source_checked: no}
+- {id: B07, name: class field theory, a: abelian extensions of number fields, b: open finite-index subgroups of the idele class group, status: theorem,
+   map: [[abelian extension, subgroup], [Artin map, reciprocity]],
+   breaks: "Non-abelian extensions need Langlands.",
+   motif: Galois correspondence, source: "Neukirch, Algebraic Number Theory, VI", source_checked: no}
+
+# ---------- C. Quantization / dequantization
+- {id: C01, name: Kirillov orbit method, a: coadjoint orbits, b: unitary irreducible representations of locally compact groups, status: conditional,
+   hyp: "theorem for connected simply connected nilpotent Lie groups; heuristic otherwise",
+   map: [[orbit, irrep], [orbit measure Fourier transform, character], [projection of orbits, restriction of reps]],
+   breaks: "Semisimple groups: integrality conditions and discrete series spoil bijection.",
+   motif: quantization, source: "Kirillov, Lectures on the Orbit Method (AMS 2004)", source_checked: no}
+- {id: C02, name: Borel–Weil–Bott, a: irreducible representations of compact Lie groups, b: holomorphic sections of line bundles on flag varieties, status: theorem,
+   map: [[dominant weight, line bundle], [representation, cohomology of line bundle]],
+   breaks: "Characteristic p: Bott vanishing fails.",
+   motif: quantization, source: "Bott, Ann. Math. 66 (1957)", source_checked: no}
+- {id: C03, name: geometric quantization, a: symplectic manifolds, b: quantum Hilbert spaces, status: heuristic,
+   hyp: "needs prequantum line bundle and polarization",
+   map: [[function, operator], [Poisson bracket, commutator]],
+   breaks: "Groenewold–van Hove: no full quantization of all polynomials.",
+   motif: quantization, source: "Woodhouse, Geometric Quantization (OUP 1992)", source_checked: no}
+- {id: C04, name: Kontsevich deformation quantization, a: Poisson manifolds, b: star products, status: theorem,
+   map: [[Poisson structure, equivalence class of star products]],
+   breaks: "Formal only; convergence is a separate problem.",
+   motif: quantization, source: "Kontsevich, Lett. Math. Phys. 66 (2003)", source_checked: no}
+- {id: C05, name: Weyl quantization, a: functions on phase space, b: pseudodifferential operators, status: conditional, hyp: "suitable symbol class",
+   map: [[symbol, operator], [Moyal product, composition]],
+   breaks: "Outside symbol classes the calculus is not closed.",
+   motif: quantization, source: "Hörmander, ALPDO III, 18.5", source_checked: no}
+- {id: C06, name: Maslov dequantization, a: "real semiring (+, ×)", b: "tropical semiring (max, +)", status: theorem,
+   map: [[log_t of sum, max as t → ∞], [product, sum]],
+   breaks: "Cancellation (subtraction) has no tropical counterpart.",
+   motif: dequantization, source: "Litvinov, J. Math. Sci. 140 (2007)", source_checked: no}
+- {id: C07, name: Mikhalkin correspondence, a: tropical curves, b: complex algebraic curves on toric surfaces, status: conditional,
+   hyp: "counting curves through points in general position on toric surfaces",
+   map: [[tropical curve counted with multiplicity, complex curve]],
+   breaks: "Non-toric surfaces or special position: correspondence fails.",
+   motif: dequantization, source: "Mikhalkin, J. AMS 18 (2005)", source_checked: no}
+- {id: C08, name: Viro patchworking, a: real algebraic curves, b: triangulations with signs, status: theorem,
+   map: [[topology of real curve, combinatorial patchwork]],
+   breaks: "Not all real curves arise by patchworking.",
+   motif: dequantization, source: "Viro (1980s); Itenberg–Mikhalkin–Shustin, Tropical Algebraic Geometry", source_checked: no}
+- {id: C09, name: fundamental theorem of tropical geometry, a: varieties over valued fields, b: tropical varieties, status: theorem,
+   map: [[valuations of points, weight vectors], [initial ideal, cone of fan]],
+   breaks: "Trivial valuation gives only fans; need algebraically closed field for surjectivity.",
+   motif: dequantization, source: "Maclagan–Sturmfels, Intro to Tropical Geometry, Thm 3.2.3", source_checked: no}
+- {id: C10, name: amoebas, a: subvarieties of complex algebraic tori, b: tropical varieties, status: theorem,
+   map: [[image under log|.|, tropical skeleton (limit)]],
+   breaks: "At finite t amoebas have tentacles and holes, not polyhedral.",
+   motif: dequantization, source: "Gelfand–Kapranov–Zelevinsky, Discriminants (1994), Ch 6", source_checked: no}
+
+# ---------- D. Categorification / decategorification
+- {id: D01, name: Grothendieck function-sheaf dictionary, a: l-adic sheaves on varieties over finite fields, b: functions on rational points, status: theorem,
+   map: [[sheaf, Frobenius trace function], [tensor product, pointwise product], [compactly supported pushforward, sum over fibers], [cohomology, sum over points], [Fourier–Deligne transform, Fourier transform]],
+   breaks: "Many sheaves give the same function; extensions are invisible.",
+   motif: decategorification, source: "Deligne, SGA 4½, Sommes trig.; Laumon, Publ. IHES 65 (1987)", source_checked: no}
+- {id: D02, name: Euler characteristic, a: cohomology, b: integers (Euler characteristic), status: theorem,
+   map: [[graded space, alternating sum of dimensions]],
+   breaks: "Infinite-dimensional cohomology has no Euler characteristic.",
+   motif: decategorification, source: "Hatcher 2.2", source_checked: no}
+- {id: D03, name: Khovanov–Jones, a: Khovanov homology, b: Jones polynomial, status: theorem,
+   map: [[graded Euler characteristic, Jones polynomial]],
+   breaks: "Khovanov homology detects the unknot; Jones status open.",
+   motif: decategorification, source: "Khovanov, Duke 101 (2000)", source_checked: no}
+- {id: D04, name: knot Floer–Alexander, a: knot Floer homology, b: Alexander polynomial, status: theorem,
+   map: [[graded Euler characteristic, Alexander polynomial]],
+   breaks: "Floer homology detects genus and fiberedness, the polynomial does not.",
+   motif: decategorification, source: "Ozsváth–Szabó, Adv. Math. 186 (2004)", source_checked: no}
+- {id: D05, name: Heegaard Floer = Seiberg–Witten, a: Heegaard Floer homology, b: Seiberg–Witten Floer homology, status: theorem,
+   map: [[3-manifold homology, 3-manifold homology]],
+   breaks: "Proofs go through embedded contact homology; module structures need care.",
+   motif: equivalence of invariants, source: "Kutluhan–Lee–Taubes, Geom. Topol. 24 (2020)", source_checked: no}
+- {id: D06, name: Grothendieck group, a: representation categories, b: representation rings (characters), status: theorem,
+   map: [[object, class in K0], [exact sequence, sum]],
+   breaks: "K0 forgets morphisms and extensions.",
+   motif: decategorification, source: "Serre, Linear Representations of Finite Groups, 9.1", source_checked: no}
+- {id: D07, name: KLR categorification, a: Khovanov–Lauda–Rouquier 2-categories, b: quantum groups, status: theorem,
+   map: [[category, algebra (via K0)]],
+   breaks: "Non-symmetrizable Cartan data need extra care.",
+   motif: categorification, source: "Khovanov–Lauda, Represent. Theory 13 (2009); Rouquier arXiv:0812.5023", source_checked: no}
+- {id: D08, name: Ringel Hall algebra, a: quiver representations over finite fields, b: positive part of quantum groups, status: theorem,
+   map: [[counting extensions, structure constants]],
+   breaks: "Non-Dynkin quivers give only the composition subalgebra.",
+   motif: decategorification, source: "Ringel, Invent. Math. 101 (1990)", source_checked: no}
+- {id: D09, name: Springer correspondence, a: irreducible representations of Weyl groups, b: pairs of nilpotent orbit and local system, status: theorem,
+   hyp: "injective into the set of pairs, not surjective",
+   map: [[representation, orbit–local system pair]],
+   breaks: "Missing pairs need generalized Springer (Lusztig).",
+   motif: geometrization of representations, source: "Springer, Invent. Math. 36 (1976)", source_checked: no}
+- {id: D10, name: Kazhdan–Lusztig, a: perverse sheaves on flag varieties, b: Kazhdan–Lusztig polynomials, status: theorem,
+   map: [[intersection cohomology stalks, polynomial coefficients]],
+   breaks: "Positive characteristic: p-canonical basis differs (Williamson).",
+   motif: decategorification, source: "Kazhdan–Lusztig, Invent. Math. 53 (1979); Beilinson–Bernstein 1981", source_checked: no}
+
+# ---------- E. Langlands, mirror symmetry
+- {id: E01, name: local Langlands for GL_n, a: n-dimensional Weil–Deligne representations, b: smooth irreducible representations of GL_n over local fields, status: theorem,
+   map: [[Galois rep, automorphic rep], [L- and epsilon-factors, L- and epsilon-factors]],
+   breaks: "Other groups need L-packets, not bijections.",
+   motif: Langlands duality, source: "Harris–Taylor 2001; Henniart, Invent. Math. 139 (2000)", source_checked: no}
+- {id: E02, name: modularity theorem, a: elliptic curves over Q, b: weight 2 newforms, status: theorem,
+   map: [[point counts mod p, Fourier coefficients], [conductor, level]],
+   breaks: "Over general number fields modularity is only partly known.",
+   motif: Langlands duality, source: "Breuil–Conrad–Diamond–Taylor, J. AMS 14 (2001)", source_checked: no}
+- {id: E03, name: Langlands functoriality, a: automorphic representations of G, b: automorphic representations of H, status: conjecture,
+   map: [[L-group homomorphism, transfer of representations]],
+   breaks: "Known only for special cases (base change, endoscopy, symmetric powers of GL2).",
+   motif: Langlands duality, source: "Langlands, letter to Weil (1967)", source_checked: no}
+- {id: E04, name: Satake isomorphism, a: spherical Hecke algebras, b: representation rings of Langlands dual groups, status: theorem,
+   map: [[Hecke operator, character]],
+   breaks: "Non-spherical (Iwahori) level needs affine Hecke algebras.",
+   motif: Langlands duality, source: "Satake, Publ. IHES 18 (1963); Gross, 'On the Satake isomorphism' (1998)", source_checked: no}
+- {id: E05, name: geometric Satake, a: perverse sheaves on the affine Grassmannian, b: representations of Langlands dual groups, status: theorem,
+   map: [[convolution, tensor product]],
+   breaks: "Needs the commutativity constraint from fusion; integral coefficients need care.",
+   motif: Langlands duality, source: "Mirković–Vilonen, Ann. Math. 166 (2007)", source_checked: no}
+- {id: E06, name: geometric Langlands, a: D-modules on Bun_G, b: ind-coherent sheaves on LocSys of the dual group, status: conditional,
+   hyp: "proof announced by Gaitsgory–Raskin et al. (2024); exact scope to verify",
+   map: [[Hecke eigensheaf, local system]],
+   breaks: "Nilpotent singular support needed on the spectral side.",
+   motif: Langlands duality, source: "Gaitsgory et al., series 'Proof of the geometric Langlands conjecture' (2024)", source_checked: no}
+- {id: E07, name: homological mirror symmetry, a: Fukaya categories, b: derived categories of coherent sheaves on mirror, status: conditional,
+   hyp: "proved in many cases (elliptic curve, quartic K3, ...); conjectural in general",
+   map: [[Lagrangian, coherent sheaf], [Floer cohomology, Ext]],
+   breaks: "Fano side needs Landau–Ginzburg models; mirror construction is not general.",
+   motif: mirror symmetry, source: "Kontsevich ICM 1994; Seidel, Invent. Math. 2015 (quartic)", source_checked: no}
+- {id: E08, name: quintic curve counts, a: Gromov–Witten invariants of the quintic, b: period integrals of the mirror, status: theorem,
+   map: [[rational curve counts, coefficients of period expansion]],
+   breaks: "Higher genus needs BCOV / holomorphic anomaly, partly conjectural.",
+   motif: mirror symmetry, source: "Candelas et al. 1991; Givental 1996; Lian–Liu–Yau 1997", source_checked: no}
+- {id: E09, name: SYZ, a: special Lagrangian torus fibrations, b: dual torus fibrations, status: conjecture,
+   map: [[torus, dual torus]],
+   breaks: "Singular fibers and instanton corrections.",
+   motif: mirror symmetry, source: "Strominger–Yau–Zaslow, Nucl. Phys. B 479 (1996)", source_checked: no}
+- {id: E10, name: Fourier–Mukai, a: derived categories of abelian varieties, b: derived categories of dual abelian varieties, status: theorem,
+   map: [[skyscraper sheaf, line bundle], [translation, tensoring by line bundle]],
+   breaks: "Abelian categories are not equivalent, only derived ones.",
+   motif: Fourier duality, source: "Mukai, Nagoya Math. J. 81 (1981)", source_checked: no}
+- {id: E11, name: AdS/CFT, a: quantum gravity in AdS, b: boundary conformal field theory, status: conjecture,
+   map: [[bulk field, boundary operator]],
+   breaks: "No rigorous definition of either side in general.",
+   motif: physical duality, source: "Maldacena, Adv. Theor. Math. Phys. 2 (1998)", source_checked: no}
+
+# ---------- F. Geometry–combinatorics
+- {id: F01, name: toric varieties, a: toric varieties, b: fans, status: theorem,
+   map: [[torus orbit, cone], [smooth, unimodular cone], [complete, complete fan]],
+   breaks: "Non-normal toric varieties are not given by fans.",
+   motif: geometry-combinatorics, source: "Fulton, Introduction to Toric Varieties", source_checked: no}
+- {id: F02, name: Delzant, a: compact symplectic toric manifolds, b: Delzant polytopes, status: theorem,
+   map: [[moment map image, polytope]],
+   breaks: "Non-Delzant polytopes give orbifolds (Lerman–Tolman).",
+   motif: geometry-combinatorics, source: "Delzant, Bull. SMF 116 (1988)", source_checked: no}
+- {id: F03, name: Hodge theory of matroids, a: matroids, b: combinatorial Chow rings satisfying Hodge theory, status: theorem,
+   map: [[characteristic polynomial, log-concave inequalities]],
+   breaks: "Gives log-concavity, not full real-rootedness.",
+   motif: geometry-combinatorics, source: "Adiprasito–Huh–Katz, Ann. Math. 188 (2018)", source_checked: no}
+- {id: F04, name: Schubert calculus, a: cohomology of Grassmannians, b: quotients of the ring of Schur functions, status: theorem,
+   map: [[Schubert class, Schur function], [cup product, Littlewood–Richardson rule]],
+   breaks: "Other flag varieties: positive combinatorial rules mostly unknown.",
+   motif: geometry-combinatorics, source: "Fulton, Young Tableaux, Ch 9", source_checked: no}
+- {id: F05, name: Ehrhart–toric Riemann–Roch, a: Ehrhart polynomials of lattice polytopes, b: Euler characteristics of line bundles on toric varieties, status: theorem,
+   map: [[lattice point count, dimension of sections]],
+   breaks: "Rational polytopes give quasi-polynomials.",
+   motif: geometry-combinatorics, source: "Fulton, Toric Varieties, 5.3", source_checked: no}
+- {id: F06, name: Schur–Weyl duality, a: irreducible representations of S_n, b: irreducible polynomial representations of GL(V) of degree n, status: theorem,
+   map: [[Young diagram, Young diagram]],
+   breaks: "Positive characteristic: semisimplicity fails.",
+   motif: dual pairs, source: "Fulton–Harris, Lecture 6", source_checked: no}
+- {id: F07, name: Howe duality, a: representations of one member of a dual pair, b: representations of the other member, status: theorem,
+   map: [[representation, representation (via oscillator rep)]],
+   breaks: "Residue characteristic 2 needed separate proof.",
+   motif: dual pairs, source: "Howe, J. AMS 2 (1989)", source_checked: no}
+- {id: F08, name: Robinson–Schensted, a: permutations, b: pairs of standard Young tableaux of the same shape, status: theorem,
+   map: [[longest increasing subsequence, first row length]],
+   breaks: "Not a homomorphism: products of permutations do not map nicely.",
+   motif: geometry-combinatorics, source: "Schensted 1961; Stanley EC2, 7.11", source_checked: no}
+- {id: F09, name: McKay correspondence, a: finite subgroups of SU(2), b: ADE Dynkin diagrams, status: theorem,
+   map: [[irreducible representation, vertex], [resolution of singularity, exceptional curve tree]],
+   breaks: "SU(3) and higher need derived-category versions (BKR).",
+   motif: ADE classification, source: "McKay 1980; Bridgeland–King–Reid, J. AMS 14 (2001)", source_checked: no}
+- {id: F10, name: Gabriel theorem, a: quivers of finite type, b: ADE Dynkin diagrams, status: theorem,
+   map: [[indecomposable representation, positive root]],
+   breaks: "Tame and wild quivers: infinitely many indecomposables (Kac).",
+   motif: ADE classification, source: "Gabriel, Manuscripta Math. 6 (1972)", source_checked: no}
+- {id: F11, name: finite type cluster algebras, a: cluster algebras of finite type, b: ADE Dynkin diagrams, status: theorem,
+   map: [[cluster variable, almost positive root]],
+   breaks: "Infinite type has no finite root model.",
+   motif: ADE classification, source: "Fomin–Zelevinsky, Invent. Math. 154 (2003)", source_checked: no}
+- {id: F12, name: simple Lie algebras and Dynkin diagrams, a: complex simple Lie algebras, b: Dynkin diagrams, status: theorem,
+   map: [[simple root, vertex], [inner products, edges]],
+   breaks: "Real forms need Satake diagrams; char p has more algebras.",
+   motif: ADE classification, source: "Humphreys, Lie Algebras, 11.4", source_checked: no}
+
+# ---------- G. Analysis–geometry–topology
+- {id: G01, name: de Rham theorem, a: de Rham cohomology, b: real singular cohomology, status: theorem,
+   map: [[closed form, cocycle], [integration, pairing with cycles]],
+   breaks: "Torsion is invisible over R.",
+   motif: analysis-topology, source: "Bott–Tu, Thm 8.9", source_checked: no}
+- {id: G02, name: Hodge theorem, a: de Rham cohomology, b: harmonic forms, status: conditional, hyp: "compact Riemannian manifold",
+   map: [[cohomology class, unique harmonic representative]],
+   breaks: "Non-compact: need L2 conditions; harmonic space can be infinite.",
+   motif: analysis-topology, source: "Warner, Foundations, 6.11", source_checked: no}
+- {id: G03, name: Atiyah–Singer index, a: analytic index of elliptic operators, b: topological index, status: theorem,
+   map: [[dim ker − dim coker, integral of characteristic classes]],
+   breaks: "Manifolds with boundary need APS eta correction.",
+   motif: analysis-topology, source: "Atiyah–Singer, Ann. Math. 87 (1968)", source_checked: no}
+- {id: G04, name: Riemann–Hilbert correspondence, a: regular holonomic D-modules, b: perverse sheaves, status: theorem,
+   map: [[differential equation, solution sheaf]],
+   breaks: "Irregular singularities need Stokes data.",
+   motif: analysis-topology, source: "Kashiwara 1984; Mebkhout 1984", source_checked: no}
+- {id: G05, name: flat connections and local systems, a: flat bundles, b: local systems, status: theorem,
+   map: [[flat connection, horizontal sections]],
+   breaks: "Non-flat connections have no local system.",
+   motif: analysis-topology, source: "Deligne, LNM 163 (1970)", source_checked: no}
+- {id: G06, name: local systems and monodromy, a: local systems, b: representations of the fundamental group, status: conditional, hyp: "connected space",
+   map: [[local system, monodromy representation]],
+   breaks: "Non-locally-simply-connected spaces.",
+   motif: analysis-topology, source: "Hatcher, Algebraic Topology, 3.H", source_checked: no}
+- {id: G07, name: nonabelian Hodge correspondence, a: Higgs bundles, b: representations of the fundamental group, status: conditional,
+   hyp: "polystable Higgs bundles with vanishing Chern classes ↔ semisimple reps; compact Kähler",
+   map: [[Higgs bundle, representation]],
+   breaks: "Not holomorphic: complex structures on the moduli differ.",
+   motif: analysis-topology, source: "Simpson, Publ. IHES 75 (1992); Corlette, J. Diff. Geom. 28 (1988)", source_checked: no}
+- {id: G08, name: Narasimhan–Seshadri, a: stable degree 0 vector bundles on curves, b: irreducible unitary representations of the fundamental group, status: theorem,
+   map: [[stable bundle, unitary rep]],
+   breaks: "Non-zero degree needs projective (twisted) reps.",
+   motif: analysis-topology, source: "Narasimhan–Seshadri, Ann. Math. 82 (1965)", source_checked: no}
+- {id: G09, name: Kobayashi–Hitchin, a: stable holomorphic bundles, b: Hermitian–Einstein metrics, status: theorem,
+   map: [[stability, existence of PDE solution]],
+   breaks: "Non-Kähler bases need Gauduchon metrics; unstable bundles: Harder–Narasimhan filtration.",
+   motif: stability-equation, source: "Donaldson 1985; Uhlenbeck–Yau, CPAM 39 (1986)", source_checked: no}
+- {id: G10, name: uniformization, a: simply connected Riemann surfaces, b: sphere plane and disc, status: theorem,
+   map: [[complex structure, constant curvature metric]],
+   breaks: "Higher dimension: no uniformization in general.",
+   motif: analysis-geometry, source: "de Saint-Gervais, Uniformization of Riemann Surfaces (EMS 2016)", source_checked: no}
+- {id: G11, name: Morse theory, a: critical points of Morse functions, b: cell decompositions and homology, status: theorem,
+   map: [[index, cell dimension], [number of critical points, Morse inequalities]],
+   breaks: "Degenerate critical points need Morse–Bott or stratified versions.",
+   motif: analysis-topology, source: "Milnor, Morse Theory (1963)", source_checked: no}
+- {id: G12, name: Chern–Weil, a: curvature forms, b: characteristic classes, status: theorem,
+   map: [[invariant polynomial in curvature, cohomology class]],
+   breaks: "Torsion classes are invisible to forms.",
+   motif: analysis-topology, source: "Milnor–Stasheff, Appendix C", source_checked: no}
+- {id: G13, name: Weyl law, a: spectrum of the Laplacian, b: volume and dimension, status: theorem,
+   map: [[eigenvalue count below λ, volume × λ^(n/2)]],
+   breaks: "Spectrum does not determine shape (isospectral drums).",
+   motif: spectrum-geometry, source: "Weyl 1911; Gordon–Webb–Wolpert 1992", source_checked: no}
+
+# ---------- H. Probability–analysis
+- {id: H01, name: Feynman–Kac, a: parabolic PDE, b: expectations over Brownian paths, status: theorem,
+   map: [[solution, weighted expectation], [potential, exponential weight]],
+   breaks: "Real-time Schrödinger: no measure on paths.",
+   motif: probability-analysis, source: "Karatzas–Shreve, 4.4", source_checked: no}
+- {id: H02, name: Kakutani Dirichlet problem, a: harmonic functions, b: Brownian motion, status: theorem,
+   map: [[Dirichlet solution, expectation at exit point]],
+   breaks: "Irregular boundary points (Lebesgue spine).",
+   motif: probability-analysis, source: "Kakutani 1944; Mörters–Peres, Ch 3", source_checked: no}
+- {id: H03, name: random walks and electrical networks, a: random walks on graphs, b: resistor networks, status: theorem,
+   map: [[commute time, effective resistance], [recurrence, infinite resistance]],
+   breaks: "Non-reversible chains have no resistor model.",
+   motif: probability-analysis, source: "Doyle–Snell 1984; Lyons–Peres, Ch 2", source_checked: no}
+- {id: H04, name: Montgomery pair correlation, a: zeros of the zeta function, b: GUE random matrix eigenvalues, status: conjecture,
+   hyp: "proved for test functions with restricted Fourier support",
+   map: [[pair correlation, pair correlation]],
+   breaks: "Arithmetic corrections at lower order (Bogomolny–Keating).",
+   motif: spectrum-arithmetic, source: "Montgomery, Proc. Symp. Pure Math. 24 (1973)", source_checked: no}
+- {id: H05, name: large deviations and Legendre transform, a: rare event probabilities, b: rate functions (convex conjugates), status: theorem,
+   map: [[cumulant generating function, Legendre transform]],
+   breaks: "Non-convex rate functions: Gärtner–Ellis fails.",
+   motif: convex duality, source: "Dembo–Zeitouni, 2.2", source_checked: no}
+- {id: H06, name: Kasteleyn dimers, a: perfect matchings of planar graphs, b: Pfaffians of oriented matrices, status: theorem,
+   map: [[number of matchings, Pfaffian]],
+   breaks: "Non-planar graphs need many Pfaffians (genus).",
+   motif: statistics-combinatorics, source: "Kasteleyn, Physica 27 (1961)", source_checked: no}
+- {id: H07, name: scaling limits and SLE, a: critical lattice models, b: SLE, status: conditional,
+   hyp: "proved for some models (site percolation on triangular lattice, Ising, ...)",
+   map: [[cluster interface, SLE_kappa curve]],
+   breaks: "Square-lattice percolation still open.",
+   motif: statistics-geometry, source: "Smirnov, C. R. Acad. Sci. 333 (2001); Schramm 2000", source_checked: no}
+
+# ---------- I. Logic–computation–categories
+- {id: I01, name: Curry–Howard, a: proofs, b: programs, status: theorem,
+   map: [[proposition, type], [proof, term], [proof normalization, computation]],
+   breaks: "Classical logic needs control operators.",
+   motif: logic-computation, source: "Howard 1969/1980; Sørensen–Urzyczyn, Lectures on Curry–Howard", source_checked: no}
+- {id: I02, name: Curry–Howard–Lambek, a: programs, b: cartesian closed categories, status: theorem,
+   map: [[type, object], [function type, exponential]],
+   breaks: "Effects need monads or other structure.",
+   motif: logic-computation, source: "Lambek–Scott, Higher Order Categorical Logic", source_checked: no}
+- {id: I03, name: Lindenbaum algebra, a: classical propositional logic, b: Boolean algebras, status: theorem,
+   map: [[proposition modulo equivalence, element]],
+   breaks: "Intuitionistic logic gives Heyting algebras.",
+   motif: logic-algebra, source: "Rasiowa–Sikorski 1963", source_checked: no}
+- {id: I04, name: topos internal logic, a: toposes, b: higher-order intuitionistic logic, status: theorem,
+   map: [[subobject classifier, truth values]],
+   breaks: "Excluded middle only in Boolean toposes.",
+   motif: logic-geometry, source: "Mac Lane–Moerdijk, Sheaves in Geometry and Logic", source_checked: no}
+- {id: I05, name: homotopy type theory, a: types, b: spaces (infinity-groupoids), status: conditional,
+   hyp: "via models (simplicial sets); univalence axiom",
+   map: [[equality, path], [dependent type, fibration]],
+   breaks: "Computation with univalence needs cubical type theory.",
+   motif: logic-geometry, source: "HoTT Book (2013); Kapulkin–Lumsdaine arXiv:1211.2851", source_checked: no}
+- {id: I06, name: Fagin theorem, a: NP, b: existential second-order logic, status: theorem,
+   map: [[problem, formula]],
+   breaks: "P needs ordered structures (Immerman–Vardi).",
+   motif: logic-computation, source: "Fagin 1974", source_checked: no}
+- {id: I07, name: Büchi–Elgot–Trakhtenbrot, a: regular languages, b: monadic second-order logic on strings, status: theorem,
+   map: [[automaton, formula]],
+   breaks: "Context-free languages need more (e.g. matching logic).",
+   motif: logic-computation, source: "Büchi 1960", source_checked: no}
+
+# ---------- J. Optimization and duality
+- {id: J01, name: LP duality, a: primal linear programs, b: dual linear programs, status: theorem,
+   map: [[constraint, variable], [variable, constraint], [complementary slackness, optimality]],
+   breaks: "Integer programs have a duality gap.",
+   motif: convex duality, source: "Schrijver, Theory of Linear and Integer Programming, 7.4", source_checked: no}
+- {id: J02, name: Lagrangian relaxation, a: hard constraints, b: prices (multipliers), status: conditional,
+   hyp: "weak duality always; strong duality under convexity and a constraint qualification",
+   map: [[constraint violation, priced penalty], [dual price, equilibrium price]],
+   breaks: "Non-convex problems (VRP): duality gap; relaxation gives bounds only.",
+   motif: convex duality, source: "Boyd–Vandenberghe, Convex Optimization, Ch 5", source_checked: no}
+- {id: J03, name: max-flow min-cut, a: maximum flows, b: minimum cuts, status: theorem,
+   map: [[flow value, cut capacity]],
+   breaks: "Multicommodity flow: gap up to O(log k).",
+   motif: convex duality, source: "Ford–Fulkerson 1956", source_checked: no}
+- {id: J04, name: König–Egerváry, a: maximum matchings in bipartite graphs, b: minimum vertex covers, status: theorem,
+   map: [[matching size, cover size]],
+   breaks: "Non-bipartite graphs: gap (odd cycles).",
+   motif: convex duality, source: "König 1931", source_checked: no}
+- {id: J05, name: Legendre–Fenchel transform, a: convex functions, b: convex conjugate functions, status: theorem,
+   map: [[slope, point], [infimal convolution, sum]],
+   breaks: "Non-convex functions: biconjugate is the convex hull.",
+   motif: convex duality, source: "Rockafellar, Convex Analysis, §12", source_checked: no}
+- {id: J06, name: optimal transport duality, a: optimal transport plans, b: dual potentials (gradients of convex functions), status: conditional,
+   hyp: "Brenier: quadratic cost, absolutely continuous source",
+   map: [[optimal map, gradient of convex function]],
+   breaks: "Singular source measures: no transport map.",
+   motif: convex duality, source: "Villani, Topics in Optimal Transportation, Thm 2.12", source_checked: no}
+- {id: J07, name: dynamic programming and min-plus algebra, a: shortest paths, b: min-plus matrix powers, status: theorem,
+   map: [[path concatenation, addition], [best path choice, min]],
+   breaks: "Negative cycles: no min-plus fixed point.",
+   motif: dequantization, source: "Butkovič, Max-linear Systems (2010)", source_checked: no}
+- {id: J08, name: Lovász extension, a: submodular set functions, b: convex functions, status: theorem,
+   map: [[submodular minimization, convex minimization]],
+   breaks: "Submodular maximization is not convex (NP-hard).",
+   motif: convex duality, source: "Lovász 1983", source_checked: no}
+
+# ---------- K. Linearization, uniformization
+- {id: K01, name: Lie correspondence, a: simply connected Lie groups, b: Lie algebras, status: theorem,
+   map: [[subgroup, subalgebra], [homomorphism, homomorphism]],
+   breaks: "Non-simply-connected groups: only up to covering.",
+   motif: linearization, source: "Warner, Thm 3.27", source_checked: no}
+- {id: K02, name: Dieudonné theory, a: p-divisible groups, b: Dieudonné modules, status: theorem,
+   map: [[group, semilinear module]],
+   breaks: "Mixed characteristic needs crystalline/prismatic refinements.",
+   motif: linearization, source: "Demazure, LNM 302 (1972)", source_checked: no}
+- {id: K03, name: complex abelian varieties, a: complex abelian varieties, b: polarized complex tori, status: theorem,
+   map: [[variety, C^g modulo lattice]],
+   breaks: "Non-polarizable tori are not algebraic.",
+   motif: uniformization, source: "Mumford, Abelian Varieties, §1–3", source_checked: no}
+- {id: K04, name: complex elliptic curves, a: complex elliptic curves, b: lattices in C up to homothety, status: theorem,
+   map: [[curve, lattice], [j-invariant, point of upper half-plane modulo SL2(Z)]],
+   breaks: "Over non-closed fields twists share the same j.",
+   motif: uniformization, source: "Silverman, AEC VI.5", source_checked: no}
+- {id: K05, name: modular forms as sections, a: modular forms, b: sections of line bundles on modular curves, status: theorem,
+   map: [[weight, line bundle power]],
+   breaks: "Odd weight and level 1: bundle not defined without stack structure.",
+   motif: geometrization, source: "Diamond–Shurman, A First Course in Modular Forms", source_checked: no}
+- {id: K06, name: Weil conjectures, a: zeta functions of varieties over finite fields, b: l-adic cohomology, status: theorem,
+   map: [[zeros and poles, Frobenius eigenvalues], [point counts, trace formula]],
+   breaks: "Singular varieties: need compact support and weights (Deligne Weil II).",
+   motif: decategorification, source: "Deligne, Publ. IHES 43 (1974)", source_checked: no}
