@@ -81,6 +81,15 @@ class MatchTest(unittest.TestCase):
         self.assertIn("Workload per seat", page)
         self.assertNotIn("__DATA__", page)
 
+    def test_live_data_runs_open_spells_to_now(self):
+        cli(self.camp, "start", "--seat", "9", "--agent", "b1", "--time", "2026-10-22T10:00:00")
+        sys.path.insert(0, str(SCRIPTS))
+        import datetime, view_match
+        d = view_match.match_data(self.camp, now=datetime.datetime(2026, 10, 22, 10, 5))
+        self.assertEqual(d["end"], 300)
+        self.assertEqual((d["intervals"][0]["a"], d["intervals"][0]["b"]), (0, 300))
+        self.assertIn("span", d)
+
 
 if __name__ == "__main__":
     unittest.main()

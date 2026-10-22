@@ -41,6 +41,15 @@ Writes `.team/match.html` (one self-contained file, no network) and prints the w
 - **Workload per seat**: busy share of the match (union of its spells), spells, distinct agents, passes received and
   sent, sorted busiest first. ▲ marks a seat busy more than 60% of the match: candidate for a second agent.
 
+## Live view
+```bash
+python <skill>/scripts/view_match.py <campaign-dir> --live [--port 8765]
+```
+Serves `.team/` on `http://127.0.0.1:8765/match.html` and rewrites `.team/match_data.json` every 2 s; the page polls it
+and follows the newest moment (red **● Live** button; drag the slider to look back, press Live to return). Seats glow
+while their spell is open, a ball flies for each new pass, the workload table updates. It must run on the machine that
+holds the campaign folder; for a team running elsewhere, copy its `events.jsonl` over and render a replay.
+
 ## Reading the workload table
 - ▲ seat with one agent → next campaign, give it a squad of 2–3 (squads.md) or split its task.
 - Seat with 0 spells → switch it off, or ask why No. 6 never gave it a task.

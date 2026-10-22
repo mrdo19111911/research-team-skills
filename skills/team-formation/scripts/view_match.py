@@ -1,8 +1,11 @@
 """Match viewer: replay .team/events.jsonl on the pitch as a self-contained HTML page.
 A seat glows while its agent is running (start -> stop); a ball flies from seat A to seat B when information passes
 (explicit "pass" events, plus derived ones: a read of a file last written by another seat).
-Usage:  python view_match.py [<campaign-dir>] [-o match.html] [--title "..."]
-Writes <campaign>/.team/match.html by default; open it in a browser. Python 3 standard library only."""
+Usage:  python view_match.py [<campaign-dir>] [-o match.html] [--title "..."]      one replay, written once
+        python view_match.py [<campaign-dir>] --live [--port 8765]                   live view while the team plays
+Writes <campaign>/.team/match.html by default; open it in a browser. --live serves .team/ on
+http://127.0.0.1:<port>/match.html and rebuilds the data every 2 s, so the page follows the match as events arrive
+(seats glow while running, open spells run up to now). Python 3 standard library only."""
 import argparse, datetime, html, json, pathlib, sys
 
 # position in metres on a 105 x 68 pitch, attacking to the right (as on the formation slide), role colour, wing?
@@ -37,11 +40,11 @@ def load(path):
     return evs
 
 
-def derive(evs):
-    """Return (intervals, passes, log). Times in seconds from the first event."""
+def derive(evs, now=None):
+    """Return (intervals, passes, log). Times in seconds from the first event; open spells end at `now` if given."""
     t0 = evs[0]["_t"]
     sec = lambda e: (e["_t"] - t0).total_seconds()
-    end = sec(evs[-1])
+    end = max(sec(evs[-1]), (now - t0).total_seconds() if now else 0)
     open_, intervals, passes, log, last_writer, seen = {}, [], [], [], {}, {}
     for e in evs:
         s, k, seat = sec(e), e.get("kind"), str(e.get("seat", ""))
@@ -123,7 +126,7 @@ svg{width:100%;height:auto;display:block;border-radius:10px}
 .ctrl{display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap}
 button,select{font:inherit;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
 input[type=range]{flex:1;min-width:160px}
-#clock{font-variant-numeric:tabular-nums;font-weight:600;min-width:76px}
+#live.on{background:#C93A2A;color:#fff;border-color:#C93A2A}#clock{font-variant-numeric:tabular-nums;font-weight:600;min-width:76px}
 #log{list-style:none;margin:0;padding:0;max-height:520px;overflow:auto;font-size:13px}
 #log li{padding:3px 0;border-bottom:1px solid var(--line);color:var(--muted)}#log li.on{color:var(--ink);font-weight:600}
 #load{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}#load th,#load td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
@@ -133,7 +136,7 @@ input[type=range]{flex:1;min-width:160px}
 .player.on .halo{opacity:1}.halo{opacity:0;transition:opacity .25s}
 .lbl{font:600 15px system-ui,Arial;fill:#fff}.num{font:700 22px system-ui,Arial;fill:#fff}
 </style></head><body><main>
-<h1>__TITLE__</h1><p class="sub">A seat glows while its agent runs; a ball flies when information passes. __SPAN__</p>
+<h1>__TITLE__</h1><p class="sub">A seat glows while its agent runs; a ball flies when information passes. <span id="span">__SPAN__</span></p>
 <div class="wrap"><div>
 <svg id="pitch" viewBox="-30 -140 1110 860" role="img" aria-label="pitch replay">
 <defs><filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9" result="b"/>
@@ -150,18 +153,17 @@ input[type=range]{flex:1;min-width:160px}
 <g id="trails"></g><g id="players"></g><g id="balls"></g></svg>
 <div class="ctrl"><button id="play">▶ Play</button><span id="clock">00:00:00</span>
 <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="time">
-<select id="speed" aria-label="speed"></select></div></div>
+<select id="speed" aria-label="speed"></select><button id="live" hidden>● Live</button></div></div>
 <div class="panel"><b>Events</b><ul id="log"></ul></div></div>
 <div class="panel" style="margin-top:14px"><b>Workload per seat</b> <span class="sub">— busy share of the match; a seat
 busy most of the time (marked ▲) is where a second agent helps next time; a seat that never runs can be switched off.</span>
 <table id="load"><thead><tr><th>Seat</th><th style="width:45%">Busy</th><th>Spells</th><th>Agents</th><th>Received</th><th>Sent</th></tr></thead><tbody></tbody></table></div>
 </main><script>
-const D=__DATA__;
-const S=D.seats, I=D.intervals, P=D.passes, L=D.log, END=Math.max(D.end,1);
+let D=__DATA__;
+const S=D.seats;let I=D.intervals, P=D.passes, L=D.log, END=Math.max(D.end,1), live=false;
 const NS="http://www.w3.org/2000/svg", el=(n,a,p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
 const st=document.getElementById("stripes");for(let i=0;i<10;i++)el("rect",{x:i*105,y:0,width:105,height:680,fill:i%2?"#36873F":"#2F7D3A"},st);
 const pos=s=>{const q=S[s];return q?[q[1]*10,q[2]*10]:[525,-90]};
-const used=new Set([...I.map(x=>x.seat),...P.flatMap(x=>[x.from,x.to])]);
 const G={};
 for(const s in S){const [name,x,y,col,wing]=S[s];if(!(s in S))continue;
  const g=el("g",{class:"player off",transform:`translate(${x*10},${y*10})`},document.getElementById("players"));
@@ -170,11 +172,13 @@ for(const s in S){const [name,x,y,col,wing]=S[s];if(!(s in S))continue;
  const t=el("text",{class:"num","text-anchor":"middle",y:8},g);t.textContent=/^\d+$/.test(s)?s:(s==="coach"?"C":"R");
  const w=Math.max(70,name.length*8.6+20);el("rect",{x:-w/2,y:38,width:w,height:26,rx:6,fill:"#1C2333","fill-opacity":.78},g);
  const lb=el("text",{class:"lbl","text-anchor":"middle",y:57},g);lb.textContent=name;
- if(!used.has(s))g.style.opacity=.18;G[s]=g;}
+ G[s]=g;}
+function markUsed(){const used=new Set([...I.map(x=>x.seat),...P.flatMap(x=>[x.from,x.to])]);for(const s in G)G[s].style.opacity=used.has(s)?"":.18}
 const speeds=[10,30,60,120,300,600];const sp=document.getElementById("speed");
 const auto=speeds.find(v=>END/v<=90)||600;for(const v of speeds){const o=document.createElement("option");o.value=v;o.textContent="×"+v;if(v===auto)o.selected=true;sp.appendChild(o)}
-const logEl=document.getElementById("log");L.forEach((e,i)=>{const li=document.createElement("li");li.innerHTML=`<span class="c">${e.clock}</span>`;li.appendChild(document.createTextNode(e.text));li.dataset.i=i;logEl.appendChild(li)});
-const BALL=()=>Math.max(4, Number(sp.value)*1.6); // seconds of match time a ball is in the air
+const logEl=document.getElementById("log");
+function renderLog(){logEl.innerHTML="";L.forEach((e,i)=>{const li=document.createElement("li");li.innerHTML=`<span class="c">${e.clock}</span>`;li.appendChild(document.createTextNode(e.text));li.dataset.i=i;logEl.appendChild(li)})}
+const BALL=()=>live?3:Math.max(4, Number(sp.value)*1.6); // seconds of match time a ball is in the air
 let t=0,playing=false,last=null;const clock=document.getElementById("clock"),scrub=document.getElementById("scrub");
 const t0=new Date(D.t0);
 function draw(){
@@ -198,25 +202,42 @@ document.getElementById("play").onclick=()=>{playing=!playing;document.getElemen
 scrub.oninput=()=>{t=END*scrub.value/1000;draw()};
 logEl.onclick=ev=>{const li=ev.target.closest("li");if(li){t=L[li.dataset.i].t;draw()}};
 const fmt=s=>s>=3600?(s/3600).toFixed(1)+" h":s>=60?Math.round(s/60)+" min":s+" s";
-const tb=document.querySelector("#load tbody");for(const r of D.load){const tr=document.createElement("tr");if(r.hot)tr.className="hot";
+const tb=document.querySelector("#load tbody");
+function renderLoad(){tb.innerHTML="";for(const r of D.load){const tr=document.createElement("tr");if(r.hot)tr.className="hot";
  const nm=(S[r.seat]||[r.seat])[0];
  tr.innerHTML=`<td>${/^\d+$/.test(r.seat)?"No. "+r.seat:r.seat} · ${nm}${r.hot?" ▲":""}</td><td><span class="bar" style="width:${Math.max(2,r.share*85)}%"></span> ${fmt(r.busy)} (${Math.round(r.share*100)}%)</td><td>${r.spells}</td><td>${r.agents}</td><td>${r.in}</td><td>${r.out}</td>`;
- tr.onclick=()=>{const x=I.find(v=>v.seat===r.seat);if(x){t=x.a;draw()}};tb.appendChild(tr)}
-draw();
+ tr.onclick=()=>{const x=I.find(v=>v.seat===r.seat);if(x){t=x.a;draw()}};tb.appendChild(tr)}}
+let fetched=Date.now();
+function apply(nd){D=nd;I=nd.intervals;P=nd.passes;L=nd.log;END=Math.max(nd.end,1);fetched=Date.now();markUsed();renderLog();renderLoad();
+ if(nd.span)document.getElementById("span").textContent=nd.span;if(live)t=END;draw()}
+apply(D);
+// live mode (view_match.py --live serves the page over http): poll the data file, follow the newest moment
+const lv=document.getElementById("live");
+if(location.protocol.startsWith("http")){lv.hidden=false;live=true;lv.classList.add("on");
+ lv.onclick=()=>{live=!live;lv.classList.toggle("on",live);if(live){playing=false;t=END;draw()}};
+ scrub.addEventListener("input",()=>{live=false;lv.classList.remove("on")});
+ setInterval(async()=>{try{const r=await fetch("match_data.json?"+Date.now());if(r.ok)apply(await r.json())}catch(e){}},2000);
+ setInterval(()=>{if(live){t=END+(Date.now()-fetched)/1000;draw()}},100)}
 </script></body></html>"""
 
 
-def build(campaign, out=None, title=None):
-    root = pathlib.Path(campaign).resolve()
+def match_data(root, now=None):
     evs = load(root / ".team" / "events.jsonl")
     if not evs:
         raise SystemExit("no events in .team/events.jsonl")
-    t0, end, intervals, passes, log = derive(evs)
+    t0, end, intervals, passes, log = derive(evs, now)
     load_ = load_table(intervals, passes, end)
-    data = {"seats": SEATS, "intervals": intervals, "passes": passes, "log": log, "end": end, "t0": t0.isoformat(),
-            "load": load_}
+    span = (f"{t0:%Y-%m-%d %H:%M} – {(t0 + datetime.timedelta(seconds=end)):%H:%M}, {len(intervals)} spells, "
+            f"{len(passes)} passes.")
+    return {"seats": SEATS, "intervals": intervals, "passes": passes, "log": log, "end": end, "t0": t0.isoformat(),
+            "load": load_, "span": span}
+
+
+def build(campaign, out=None, title=None, now=None):
+    root = pathlib.Path(campaign).resolve()
+    data = match_data(root, now)
+    intervals, passes, load_, span = data["intervals"], data["passes"], data["load"], data["span"]
     title = title or f"Match replay — {root.name}"
-    span = f"{t0:%Y-%m-%d %H:%M} – {(t0 + datetime.timedelta(seconds=end)):%H:%M}, {len(intervals)} spells, {len(passes)} passes."
     page = (PAGE.replace("__TITLE__", html.escape(title)).replace("__SPAN__", html.escape(span))
             .replace("__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/")))
     out = pathlib.Path(out) if out else root / ".team" / "match.html"
@@ -224,11 +245,43 @@ def build(campaign, out=None, title=None):
     return out, len(intervals), len(passes), load_
 
 
+def serve_live(campaign, port, title=None):
+    """Serve .team/ over http and rewrite match_data.json every 2 s; the page polls it."""
+    import functools, http.server, threading, time
+    root = pathlib.Path(campaign).resolve()
+    team, log = root / ".team", root / ".team" / "events.jsonl"
+    while not log.exists() or not log.read_text(encoding="utf-8").strip():
+        print("waiting for the first event in", log)
+        time.sleep(2)
+    title = title or f"Live match — {root.name}"
+    build(root, title=title, now=datetime.datetime.now())
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(team))
+    handler.func.log_message = lambda *a, **k: None
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", port), handler)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    print(f"live view: http://127.0.0.1:{port}/match.html  (Ctrl+C to stop)", flush=True)
+    while True:
+        try:
+            tmp = team / "match_data.json.tmp"
+            tmp.write_text(json.dumps(match_data(root, datetime.datetime.now()), ensure_ascii=False), encoding="utf-8")
+            tmp.replace(team / "match_data.json")
+        except (OSError, SystemExit) as e:
+            print("rebuild skipped:", e, file=sys.stderr)
+        time.sleep(2)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("campaign", nargs="?", default=".")
     ap.add_argument("-o", "--out"); ap.add_argument("--title")
+    ap.add_argument("--live", action="store_true", help="serve a live view that follows events as they arrive")
+    ap.add_argument("--port", type=int, default=8765)
     a = ap.parse_args(argv)
+    if a.live:
+        try:
+            serve_live(a.campaign, a.port, a.title)
+        except KeyboardInterrupt:
+            return 0
     out, ni, np_, load_ = build(a.campaign, a.out, a.title)
     print(f"wrote {out} ({ni} spells, {np_} passes)")
     print(f"{'seat':>8} {'busy':>8} {'share':>6} {'spells':>6} {'agents':>6} {'in':>4} {'out':>4}")
